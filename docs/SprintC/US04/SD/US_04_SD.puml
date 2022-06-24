@@ -1,0 +1,133 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Receptionist" as receptionist
+
+participant ":RegisterSnsUserArrivalUi" as ui
+participant ":RegisterSnsUserArrivalController" as controller
+
+participant "ScheduleStore" as store
+participant "SnsUserStore" as userStore
+participant ":Company" as company
+participant ":ScheduleMapper" as mapper
+participant "VaccinationCenter" as center
+participant "ScheduleDto" as dto
+
+
+activate receptionist
+
+note right receptionist
+    after receptionist logs in and selects her/his vaccination center
+end note
+
+receptionist -> ui : requests to register arrival of a SNS User
+
+activate ui
+
+loop while verifySnsNumber(snsNumber) == False
+
+note right receptionist
+loop until a valid snsNumber is received or receptionist wants to exit
+end note
+
+ui --> receptionist : requests user snsNumber
+
+
+
+deactivate ui
+
+receptionist -> ui : inputs the snsNumber
+
+activate ui
+
+ui -> controller : verifySnsNumber(snsNumber)
+
+
+activate controller
+
+controller -> company : userStore = getUserStore()
+activate company
+deactivate company
+
+controller -> userStore : validateNumber(snsNumber)
+activate userStore
+deactivate userStore
+end
+
+deactivate controller
+
+ui -> controller : verifyVaccineReservation(snsNumber, vaccinationCenter)
+
+activate controller
+
+controller -> company : ScheduleVaccineStore = getScheduleVaccineStore()
+activate company
+deactivate company
+
+controller -> controller : arrivalTime = getCurrentTime()
+
+controller -> store : verifySchedule(snsNumber, arrivalTime)
+activate store
+deactivate store
+
+autonumber stop
+
+alt #Salmon verifyVaccineReservation == False
+
+note right controller
+if the user doesn't have a vaccine scheduled
+end note
+
+controller --> ui  : **11** result
+
+ui --> receptionist : **12** informs receptionist that the user doesn't have a scheduled vaccine
+
+end
+
+autonumber resume
+
+controller -> store : getReservationDetails(snsNumber, arrivalTime)
+
+activate store
+
+store -> mapper : scheduleToDto(scheduleVaccine)
+deactivate store
+
+activate mapper
+mapper -> dto : create
+
+activate dto
+deactivate dto
+
+mapper --> controller : returns ScheduleDto
+deactivate mapper
+
+controller --> ui : returns vaccine reservation details
+
+deactivate controller
+
+ui --> receptionist : shows data and requests confirmation
+
+receptionist -> ui : confirms data
+
+ui -> controller : registerUserArrival(snsNumber, VaccinationCenter)
+
+activate controller
+
+controller -> center : addArrival(snsNumber, Hour)
+
+activate center
+
+center -> center : adds arrival to usersArrived
+
+deactivate center
+
+controller --> ui : result
+
+deactivate controller
+
+ui --> receptionist : informs operation success
+
+@enduml

@@ -1,0 +1,251 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+@startuml
+
+
+class ScheduleVaccineReceptionistUi{
+}
+
+class ScheduleVaccineReceptionistController {
+- VaccinationCenterStore centerStore
+- VaccineTypeStore typeStore
+- ScheduleStore scheduleStore
+- AuthFacade authFacade
+- SnsUserStore snsUserStore
+- Schedule schedule
+- SnsUser snsUser
++ getListOfCenters()
++ getOngoingBreakoutType(String typeName)
++ getListOfTypes()
++ createSchedule(ScheduleDto scheduleDto)
++ saveSchedule(VaccineTypeDto vaccineTypeDto)
++ verifySnsNumber()
+}
+
+class Company {
+- AuthFacade authFacade
+- SnsUserStore snsUserStore
+- VaccineTypeStore vaccineTypeStore
+- VaccinationCenterStore vaccinationCenterStore
+- ScheduleStore scheduleStore
++ getAuthFacade()
++ getSnsUserStore()
++ getVaccineTypeStore()
++ getVaccinationCenterStore()
++ getScheduleStore()
+}
+
+class ScheduleStore {
+- HashMap<String,HashMap<Schedule, VaccineType>> schedules
++ verifySchedule (String snsNumber, Date date)
++ getSchedules()
++ createNewSchedule(ScheduleDto scheduleDto)
++ saveSchedule(SnsUser snsUser, Schedule schedule, VaccineTypeDto vaccineTypeDto)
++ saveSchedule(SnsUser snsUser, Schedule schedule, VaccineTypeDto vaccineTypeDto)
+- saveSchedule(String snsUserNumber,Schedule schedule, VaccineType vaccineType)
+}
+
+class VaccinationCenterStore {
+- HashMap<String,VaccinationCenter> centers
++ getListOfCenters()
+}
+
+class VaccinationCenterMapper {
++ toVaccinationCenter(VaccinationCenterDto dto)
++ listToDto (List<VaccinationCenter> centers)
++ centerToDto (VaccinationCenter vaccinationCenter)
+}
+
+class ScheduleMapper {
++ toSchedule(ScheduleDto scheduleDto)
+}
+
+class VaccinationCenterDto {
+- String name
+- String address
+- String phoneNumber
+- String email
+- String fax
+- String websiteAddress
+- Coordinator centerCoordinator
+- Hour openHour
+- Hour closeHour
+- int slotDuration
+- int capacity
++ getName()
++ getAddress()
++ getPhoneNumber()
++ getEmail()
++ getFax()
++ getWebsiteAddress()
++ getCenterCoordinator()
++ getOpenHour()
++ getCloseHour()
++ getSlotDuration()
++ getCapacity()
+}
+
+class VaccinationCenter {
+- String name
+- String address
+- String phoneNumber
+- Email email
+- String fax
+- String websiteAddress
+- List<Pair<SnsUser,Hour>> usersArrived
+- Coordinator centerCoordinator
+- HashMap<Integer,HashMap<Integer,HashMap<Integer,CenterDays>>> yearSchedule
+- CenterHours hours
+- Slot slot
+- validateData (String name, String address, String phoneNumber, String email, String fax, String websiteAddress)
+
+}
+
+class Schedule {
+- Date date
+- Hour hour
+- VaccinationCenter vaccinationCenter
++ getDate()
++ getHour()
++ getVaccinationCenter()
+}
+
+class ScheduleDto {
+- Date date
+- Hour hour
+- VaccinationCenter vaccinationCenter
++ getDate()
++ getHour()
++ getVaccinationCenter()
+}
+
+class VaccineTypeStore {
+- List <VaccineType> vaccineTypes
++ getVaccineTypes()
+}
+
+class VaccineTypeMapper {
++ toVaccineType (VaccineTypeDto dto)
++ toVaccineTypeDto (VaccineType vaccineType)
++ vaccineTypeListToDto (List<VaccineType> vaccineTypeList)
+}
+
+class VaccineTypeDto {
+- String typeCode
+- String shortDescription
+- int technology
++ getTypeCode()
++ getShortDescription()
++ getTechnology()
+
+}
+
+class VaccineType {
+- String typeCode
+- String shortDescription
+- int technology
++ getTypeCode()
++ getShortDescription()
++ getTechnology()
+- validateAttributes(String typeCode, String shortDescription,int technology)
+
+}
+
+class DateMapper {
++ toDate(DateDto dateDto)
+
+}
+
+class Date {
+- int day
+- int month
+- int year
+- validateDate(int day,int month)
++ getDay()
++ getMonth()
++ getYear()
+
+}
+
+class DateDto {
+- int day
+- int month
+- int year
++ getDay()
++ getMonth()
++ getYear()
+
+}
+
+class HourMapper {
++ toHourDto(Hour hour)
+}
+
+class Hour {
+- int horas
+- int minutos
+- int segundos
++ getHoras()
++ getMinutos()
++ getSegundos()
+
+}
+
+class HourDto {
+- int horas
+- int minutos
+- int segundos
++ getHoras()
++ getMinutos()
++ getSegundos()
+}
+
+class Notification {
+- String address
+- String message
+}
+
+class NotificationSender {
++ sendNotification(Notification notification)
+}
+
+ScheduleVaccineReceptionistUi .-> ScheduleVaccineReceptionistController
+ScheduleVaccineReceptionistController ..> ScheduleStore
+ScheduleVaccineReceptionistController ..> VaccinationCenterStore
+ScheduleVaccineReceptionistController .> Company
+Company .> ScheduleStore
+Company ..> AuthFacade
+Company ..> VaccinationCenterStore
+ScheduleStore ..> ScheduleMapper
+ScheduleStore ..> AuthFacade
+ScheduleStore -> Schedule : contains
+ScheduleMapper ..> ScheduleDto
+ScheduleStore ...> ScheduleDto
+VaccinationCenterStore ...> VaccinationCenterMapper
+VaccinationCenterMapper <. ScheduleMapper
+VaccinationCenterMapper ..> VaccinationCenterDto
+VaccinationCenterMapper --> VaccinationCenter :creates
+Company .> VaccineTypeStore
+ScheduleVaccineReceptionistController .> VaccineTypeStore
+VaccineTypeStore .> VaccineTypeMapper
+ScheduleMapper ..> VaccineTypeMapper
+VaccineTypeMapper .> VaccineTypeDto
+ScheduleMapper ..> VaccinationCenter
+ScheduleMapper ..> VaccineType
+VaccineTypeMapper .> VaccineType
+ScheduleMapper ..> DateMapper
+DateMapper ..> Date
+DateMapper ..> DateDto
+ScheduleMapper ..> Date
+ScheduleMapper ..> HourMapper
+HourMapper ..> Hour
+HourMapper ..> HourDto
+ScheduleMapper .> Hour
+ScheduleStore .> Notification
+ScheduleStore .> NotificationSender
+
+@enduml
+
+@enduml

@@ -1,0 +1,64 @@
+@startuml
+
+left to right direction
+
+actor "Center Coordinator" as coordinator
+actor "Receptionist" as receptionist
+actor "Administrator" as admin
+actor "Nurse" as nurse
+actor "SNS user" as user
+
+
+
+
+usecase uc1 as "UC1 - Schedule a vaccine"
+usecase uc2 as "UC2 - Obtain a vaccination certificate"
+usecase uc3 as "UC3 - Request the issuance of the EU COVID Digital Certificate"
+
+user --> uc1
+user --> uc2
+user --> uc3
+
+usecase uc4 as "UC4 - Issue and deliver a vaccination certificate"
+usecase uc5 as "UC5 - Check the list of SNS users that are present in the vaccination center"
+usecase uc6 as "UC6 - Check the user information and health condition "
+usecase uc7 as "UC7 - Register the application of a vaccine"
+usecase uc8 as "UC8 - Record adverse reactions to the vaccine"
+
+nurse --> uc4
+nurse --> uc5
+nurse --> uc6
+nurse --> uc7
+nurse --> uc8
+
+usecase uc9 as "UC9 - Configure and manage the core information"
+usecase uc10 as "UC10 - Register vaccination center"
+usecase uc11 as "UC11 - Register employees"
+
+admin --> uc9
+admin --> uc10
+admin --> uc11
+
+usecase uc12 as "UC12 - Schedule the vaccine appointment"
+usecase uc13 as "UC13 - Register the arrival of the user"
+usecase uc14 as "UC14 - Confirms that a vaccine is scheduled for that day and time"
+
+receptionist --> uc12
+receptionist --> uc13
+receptionist --> uc14
+
+usecase uc15 as "UC15 - Monitor the vaccination process"
+usecase uc16 as "UC16 - See statistics and charts"
+usecase uc17 as "UC17 - Generate reports"
+usecase uc18 as "UC18 - Analyze data from other centers"
+
+coordinator --> uc15
+coordinator --> uc16
+coordinator --> uc17
+coordinator --> uc18
+
+
+
+
+
+@enduml

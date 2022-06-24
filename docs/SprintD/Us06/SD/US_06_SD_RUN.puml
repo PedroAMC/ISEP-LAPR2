@@ -1,0 +1,84 @@
+@startuml
+
+autonumber
+
+
+participant "task:\nExportCsvTask" as task
+participant Company as company
+
+
+participant VaccinationCenterStore as centerstore
+participant VaccinationCenterMapper as centermapper
+participant "centersList\n:List<VaccinationCenter>" as centerlist
+participant "centersListDto\n:List<VaccinationCenterDto>" as centerlistdto
+participant "vaccinationCenterDto:VaccinationCenterDto" as centerdto
+participant "vaccinationCenter:VaccinationCenter" as center
+
+participant "dailyReportGenerator:\nDailyReportGenerator" as generator
+
+?o-> task : run ()
+
+activate task
+task -> company : setTask()
+
+activate company
+deactivate task
+company -> centerstore : getListOfCenters()
+
+
+activate centerstore
+
+centerstore -> centermapper : listToDto(centersList)
+
+activate centermapper
+
+create centerlistdto
+centermapper --> centerlistdto : create()
+
+loop for each center in centersList
+
+centermapper -> centerlist : vaccinationCenter = get(i)
+activate centerlist
+
+deactivate centerlist
+
+centermapper -> centermapper : vaccinationCenterDto = centerToDto (center)
+activate centermapper
+deactivate centermapper
+
+create centerdto
+
+centermapper --> centerdto : create (...)
+
+centermapper -> centerlistdto : add(vaccinationCenterDto)
+activate centerlistdto
+deactivate centerlistdto
+
+end
+
+centermapper --> centerstore : centersListDto
+deactivate centermapper
+
+centerstore --> company : centersListDto
+
+deactivate centerstore
+
+create generator
+
+company --> generator : create ()
+
+company -> generator : exportData (centersListDto)
+
+activate generator
+
+ref over generator
+US_06_SD_EXPORT
+
+end
+
+
+
+
+
+
+@enduml

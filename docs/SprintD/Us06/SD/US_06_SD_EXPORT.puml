@@ -1,0 +1,70 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+participant "dailyReportGenerator:\nDailyReportGenerator" as generator
+participant "vaccinationCenterDto:VaccinationCenterDto" as dto
+participant Date as date
+participant "centersListDto\n:List<VaccinationCenterDto>" as list
+participant "writer:\nFileWriter" as writer
+
+?o-> generator : exportData (centersListDto)
+
+activate generator
+
+create writer
+generator --> writer: create (fileName)
+
+generator -> writer : append(HEADER)
+activate writer
+deactivate writer
+
+
+loop for each vaccination center
+
+generator -> list : vaccinationCenterDto = get(i)
+activate list
+
+deactivate list
+
+generator -> date : date = getCurrentDate()
+activate date
+deactivate date
+
+generator -> writer : append(date)
+
+activate writer
+deactivate writer
+
+generator -> dto : vaccinationCenterName = getName()
+activate dto
+deactivate dto
+
+generator -> writer : append(vaccinationCenterName)
+
+activate writer
+deactivate writer
+
+generator -> dto : totalVaccinated = getTotalVaccinated(date)
+
+activate dto
+deactivate dto
+
+generator -> writer : append(totalVaccinated)
+
+activate writer
+deactivate writer
+
+end
+
+generator -> writer : close()
+
+activate writer
+deactivate writer
+
+deactivate generator
+
+
+
+@enduml

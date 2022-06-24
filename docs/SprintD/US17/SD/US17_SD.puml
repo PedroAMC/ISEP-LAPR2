@@ -1,0 +1,27 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Coordinator" as coordinator
+
+participant ":ImportGui" as gui
+participant ":ImportGuiController" as controller
+
+
+activate coordinator
+
+coordinator -> gui : selects sorting algorithm, view info by arrival time or center leaving time, and by increasing or decreasing order
+activate gui
+
+gui -> controller :
+activate controller
+
+controller --> gui :
+deactivate controller
+
+gui --> coordinator : loads the registered SNS Users and their information
+deactivate gui
+
+deactivate coordinator
+@enduml

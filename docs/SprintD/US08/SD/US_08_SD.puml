@@ -1,0 +1,243 @@
+@startuml
+
+autonumber
+
+actor "Nurse" as user
+
+participant VaccineAdministrationUi as ui
+participant VaccineAdministrationController as controller
+participant Company as company
+participant "vaccinationCenterStore:\nVaccinationCenterStore" as centerstore
+participant "vaccinationCenter:\nVaccinationCenter" as center
+participant "adverseReactonStore:\nAdverseReactionStore" as reactionstore
+participant AdverseReactionsMapper as reactionmapper
+participant AdverseReactionDto as reactionDto
+participant SnsUserDto as userDto
+participant ScheduleStore as scheduleStore
+participant Schedule as schedule
+participant VaccineStore as vaccineStore
+participant Vaccine as vaccine
+participant AdministrationProcessMapper as vaccineAdministrationMapper
+participant AdministrationProcessDto as administrationdto
+participant VaccineAdministrationStore as administrations
+participant VaccineAdministrationMapper as mapper
+participant VaccineAdministration as vaccineAdministration
+participant Notification as notification
+participant Sender as sender
+participant "vaccineList:\nList<Vaccine>" as vaccineList
+participant "usersArrived:\nList<Pair<SnsUserDto,HourDto>>" as usersArrived
+
+activate user
+
+user -> ui : requests to see the SNS users arrivals
+activate ui
+
+ui -> controller : getUsersArrived()
+activate controller
+
+controller -> company : vaccinationCenterStore = getVaccinationCenterStore()
+activate company
+deactivate company
+
+controller -> centerstore : vaccinationCenter = findVaccinationCenter()
+activate centerstore
+deactivate centerstore
+
+controller -> center : usersArrived = getUsersArrived()
+activate center
+
+center --> controller : usersArrived
+deactivate center
+
+controller --> ui : usersArrived
+deactivate controller
+
+ui --> user : requests to choose a SNS user
+deactivate ui
+
+user -> ui : chooses the desired SNS user
+activate ui
+
+ui -> controller : verifyUserInformation(index)
+activate controller
+
+controller -> usersArrived : snsUserDto = get(index)
+activate usersArrived
+deactivate usersArrived
+
+controller -> userDto : name = getName()
+activate userDto
+deactivate userDto
+
+controller -> userDto : age = getAge()
+activate userDto
+deactivate userDto
+
+controller -> company : adverseReactionStore = getAdverseReactionStore()
+activate company
+deactivate company
+
+controller -> reactionstore : adverseReactions = getAdverseReactions(snsUserDto)
+activate reactionstore
+
+reactionstore -> reactionmapper : adverseReactionToDto(adverseReaction)
+activate reactionmapper
+
+create reactionDto
+reactionmapper --> reactionDto : create(adverseReaction)
+activate reactionDto
+
+reactionDto --> reactionmapper : adverseReactionDto
+deactivate reactionDto
+
+reactionmapper --> reactionstore : adverseReactionDto
+deactivate reactionmapper
+
+reactionstore --> controller : adverseReactionDto
+deactivate reactionstore
+
+controller --> ui : show information
+deactivate controller
+
+ui--> user : show information
+deactivate ui
+
+user -> ui : asks to show instructions
+activate ui
+
+ui -> controller : getInstructions()
+activate controller
+
+controller -> company : scheduleStore = getScheduleStore()
+activate company
+deactivate company
+
+controller -> scheduleStore : schedule = getSchedule(SnsUserDto)
+activate scheduleStore
+deactivate scheduleStore
+
+controller -> schedule : vaccineType = getVaccineType()
+activate schedule
+deactivate schedule
+
+controller -> company : vaccineStore = getVaccineStore()
+activate company
+deactivate company
+
+controller -> vaccineStore : vaccine = getVaccine(vaccineType,age)
+activate vaccineStore
+
+loop while vaccine.getType != vaccineType and age is not in the age group
+vaccineStore -> vaccineList : vaccine = get(i)
+activate vaccineList
+
+
+
+deactivate vaccineList
+end loop
+
+vaccineStore --> controller : vaccine
+deactivate vaccineStore
+
+    controller -> vaccine : getAdministrationProcess()
+activate vaccine
+
+vaccine -> vaccineAdministrationMapper : administrationProcessToDto(vaccinationProcess)
+activate vaccineAdministrationMapper
+
+create administrationdto
+vaccineAdministrationMapper --> administrationdto : create(administrationProcess)
+activate administrationdto
+
+administrationdto --> vaccineAdministrationMapper : administrationProcessDto
+deactivate administrationdto
+
+vaccineAdministrationMapper --> vaccine : administrationProcessDto
+deactivate vaccineAdministrationMapper
+
+vaccine --> controller : administrationProcessDto
+deactivate vaccine
+
+controller --> ui : instructions (vaccine, administration process)
+deactivate controller
+
+ui --> user : shows vaccine administration instructions
+deactivate ui
+
+user -> ui : requests to record a vaccine administration
+activate ui
+
+ui --> user : requests the necessary data
+deactivate ui
+
+user -> ui : inputs the data
+activate ui
+
+ui -> controller : createVaccineAdministration(vaccineAdministrationDto)
+activate controller
+
+
+controller -> administrations : vaccineAdministration = createNewVaccineAdministration(vaccineAdministrationDto)
+activate administrations
+
+administrations -> mapper : vaccineAdministration = toVaccineAdministration(vaccineAdministrationDto)
+activate mapper
+
+create vaccineAdministration
+
+mapper -> vaccineAdministration : create(SNS number,vaccine type, vaccine name/brand, vaccine lot number, administration time)
+
+vaccineAdministration -> vaccineAdministration : validateData(SNS number,vaccine type, vaccine name/brand, vaccine lot number, administration time)
+
+activate vaccineAdministration
+deactivate vaccineAdministration
+
+mapper --> administrations : vaccineAdministration
+deactivate mapper
+
+administrations --> controller : vaccineAdministration
+deactivate administrations
+
+deactivate controller
+
+ui-->user : shows the data ands asks for confirmation
+deactivate ui
+
+user -> ui : confirms the data
+activate ui
+
+ui -> controller : saveVaccineAdministration()
+activate controller
+
+controller -> administrations : saveVaccineAdministration(SNS number,vaccine type, vaccine name/brand, vaccine lot number, administration time)
+activate administrations
+
+administrations -> administrations : validateVaccineAdministration(SNS number,vaccine type, vaccine name/brand, vaccine lot number, administration time)
+activate administrations
+deactivate administrations
+
+administrations -> administrations : saveVaccineAdministration(SNS number,vaccine type, vaccine name/brand, vaccine lot number, administration time)
+activate administrations
+deactivate administrations
+
+administrations -> administrations : calculateLeavingTime()
+activate administrations
+deactivate administrations
+
+create notification
+administrations -> notification : create(...)
+
+administrations -> sender : sendNotification(notification)
+activate sender
+deactivate sender
+
+controller -> center : addVaccinated()
+activate center
+deactivate center
+
+deactivate administrations
+deactivate controller
+
+ui --> user : receives message informing the result
+
+@enduml

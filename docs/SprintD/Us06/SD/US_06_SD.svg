@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="638px" preserveAspectRatio="none" style="width:890px;height:638px;background:#FFFFFF;" version="1.1" viewBox="0 0 890 638" width="890px" zoomAndPan="magnify"><defs/><g><rect fill="#FFFFFF" height="515.0137" style="stroke:#181818;stroke-width:1.0;" width="10" x="52" y="62.9766"/><rect fill="#FFFFFF" height="493.7031" style="stroke:#181818;stroke-width:1.0;" width="10" x="440" y="84.2871"/><rect fill="#FFFFFF" height="30" style="stroke:#181818;stroke-width:1.0;" width="10" x="714" y="229.5508"/><rect fill="#FFFFFF" height="30" style="stroke:#181818;stroke-width:1.0;" width="10" x="714" y="324.1719"/><rect fill="#FFFFFF" height="30" style="stroke:#181818;stroke-width:1.0;" width="10" x="714" y="487.5469"/><rect fill="#FFFFFF" height="30" style="stroke:#181818;stroke-width:1.0;" width="10" x="811" y="324.1719"/><rect fill="#FFFFFF" height="90.4434" style="stroke:#181818;stroke-width:1.0;" width="10" x="811" y="487.5469"/><rect height="156.375" style="stroke:#000000;stroke-width:1.5;fill:none;" width="874" x="10" y="413.6152"/><line style="stroke:#181818;stroke-width:0.5;fill:none;stroke-dasharray:5.0,5.0;" x1="57" x2="57" y1="52.9766" y2="586.9902"/><line style="stroke:#181818;stroke-width:0.5;fill:none;stroke-dasharray:5.0,5.0;" x1="444.5" x2="444.5" y1="52.9766" y2="586.9902"/><line style="stroke:#181818;stroke-width:0.5;fill:none;stroke-dasharray:5.0,5.0;" x1="719" x2="719" y1="189.252" y2="586.9902"/><line style="stroke:#181818;stroke-width:0.5;fill:none;stroke-dasharray:5.0,5.0;" x1="816" x2="816" y1="131.2754" y2="586.9902"/><rect fill="#E2E2F0" height="30.4883" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42" x="36" y="21.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="28" x="43" y="42.0234">App</text><rect fill="#E2E2F0" height="30.4883" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="42" x="36" y="585.9902"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="28" x="43" y="606.5254">App</text><rect fill="#E2E2F0" height="30.4883" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="79" x="405.5" y="21.4883"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="65" x="412.5" y="42.0234">Company</text><rect fill="#E2E2F0" height="30.4883" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="79" x="405.5" y="585.9902"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="65" x="412.5" y="606.5254">Company</text><rect fill="#E2E2F0" height="46.9766" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58" x="690" y="585.9902"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="36" x="701" y="606.5254">timer</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="44" x="697" y="623.0137">:Timer</text><rect fill="#E2E2F0" height="46.9766" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="116" x="758" y="585.9902"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="32" x="800" y="606.5254">task:</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="102" x="765" y="623.0137">ExportCsvTask</text><rect fill="#FFFFFF" height="515.0137" style="stroke:#181818;stroke-width:1.0;" width="10" x="52" y="62.9766"/><rect fill="#FFFFFF" height="493.7031" style="stroke:#181818;stroke-width:1.0;" width="10" x="440" y="84.2871"/><rect fill="#FFFFFF" height="30" style="stroke:#181818;stroke-width:1.0;" width="10" x="714" y="229.5508"/><rect fill="#FFFFFF" height="30" style="stroke:#181818;stroke-width:1.0;" width="10" x="714" y="324.1719"/><rect fill="#FFFFFF" height="30" style="stroke:#181818;stroke-width:1.0;" width="10" x="714" y="487.5469"/><rect fill="#FFFFFF" height="30" style="stroke:#181818;stroke-width:1.0;" width="10" x="811" y="324.1719"/><rect fill="#FFFFFF" height="90.4434" style="stroke:#181818;stroke-width:1.0;" width="10" x="811" y="487.5469"/><polygon fill="#181818" points="428,80.2871,438,84.2871,428,88.2871,432,84.2871" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="62" x2="434" y1="84.2871" y2="84.2871"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="69" y="79.5449">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="346" x="82" y="79.5449">scheduleDailyVaccinatedReport (firstTime,waitTillNext)</text><polygon fill="#181818" points="746,109.5977,756,113.5977,746,117.5977,750,113.5977" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="450" x2="752" y1="113.5977" y2="113.5977"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="457" y="108.8555">2</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="50" x="470" y="108.8555">create ()</text><rect fill="#E2E2F0" height="46.9766" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="116" x="758" y="92.2871"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="32" x="800" y="112.8223">task:</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="102" x="765" y="129.3105">ExportCsvTask</text><polygon fill="#181818" points="678,167.5742,688,171.5742,678,175.5742,682,171.5742" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="450" x2="684" y1="171.5742" y2="171.5742"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="457" y="166.832">3</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="50" x="470" y="166.832">create ()</text><rect fill="#E2E2F0" height="46.9766" rx="2.5" ry="2.5" style="stroke:#181818;stroke-width:0.5;" width="58" x="690" y="150.2637"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="36" x="701" y="170.7988">timer</text><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="44" x="697" y="187.2871">:Timer</text><polygon fill="#181818" points="702,225.5508,712,229.5508,702,233.5508,706,229.5508" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="450" x2="708" y1="229.5508" y2="229.5508"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="457" y="224.8086">4</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="232" x="470" y="224.8086">schedule(task,firstTime,waitTillNext)</text><path d="M20,272.5508 L20,297.5508 L853,297.5508 L853,282.5508 L843,272.5508 L20,272.5508 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><path d="M843,272.5508 L843,282.5508 L853,282.5508 L843,272.5508 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="288" x="286" y="290.1191">After reaches the date specified as "firstTime"</text><polygon fill="#181818" points="799,320.1719,809,324.1719,799,328.1719,803,324.1719" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="724" x2="805" y1="324.1719" y2="324.1719"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="731" y="319.4297">5</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="33" x="744" y="319.4297">run ()</text><rect height="39.4434" style="stroke:#000000;stroke-width:1.5;fill:none;" width="122" x="755" y="362.1719"/><path d="M755,362.1719 L819,362.1719 L819,369.1719 L809,379.1719 L755,379.1719 L755,362.1719 " fill="#EEEEEE" style="stroke:#000000;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="19" x="768" y="376.7402">ref</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="88" x="772" y="394.7734">US_06_SD_RUN</text><path d="M10,413.6152 L84,413.6152 L84,420.9258 L74,430.9258 L10,430.9258 L10,413.6152 " fill="#EEEEEE" style="stroke:#000000;stroke-width:1.5;"/><rect fill="none" height="156.375" style="stroke:#000000;stroke-width:1.5;" width="874" x="10" y="413.6152"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="29" x="25" y="427.1836">loop</text><path d="M20,435.9258 L20,460.9258 L853,460.9258 L853,445.9258 L843,435.9258 L20,435.9258 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><path d="M843,435.9258 L843,445.9258 L853,445.9258 L843,435.9258 " fill="#FEFFDD" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="334" x="265" y="453.4941">After the time specified as "waitTillNext" has elapsed</text><polygon fill="#181818" points="799,483.5469,809,487.5469,799,491.5469,803,487.5469" style="stroke:#181818;stroke-width:1.0;"/><line style="stroke:#181818;stroke-width:1.0;" x1="724" x2="805" y1="487.5469" y2="487.5469"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="9" x="731" y="482.8047">6</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="33" x="744" y="482.8047">run ()</text><rect height="39.4434" style="stroke:#000000;stroke-width:1.5;fill:none;" width="122" x="755" y="525.5469"/><path d="M755,525.5469 L819,525.5469 L819,532.5469 L809,542.5469 L755,542.5469 L755,525.5469 " fill="#EEEEEE" style="stroke:#000000;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="19" x="768" y="540.1152">ref</text><text fill="#000000" font-family="sans-serif" font-size="12" lengthAdjust="spacing" textLength="88" x="772" y="558.1484">US_06_SD_RUN</text><!--MD5=[c7ca03af0a9b4d895f7918a00e36e620]
+@startuml
+
+autonumber
+
+participant App as app
+participant Company as company
+participant "timer\n:Timer" as timer
+participant "task:\nExportCsvTask" as task
+
+activate app
+
+app -> company : scheduleDailyVaccinatedReport (firstTime,waitTillNext)
+
+
+
+activate company
+
+create task
+company - -> task : create ()
+
+
+create timer
+company - -> timer : create ()
+
+
+
+company -> timer : schedule(task,firstTime,waitTillNext)
+
+note over app,task
+After reaches the date specified as "firstTime" 
+end note
+
+activate timer
+deactivate timer
+
+
+timer -> task : run ()
+
+activate timer
+deactivate timer
+
+ref over task
+US_06_SD_RUN
+end ref
+
+activate task
+
+deactivate timer
+loop
+note over app,task
+After the time specified as "waitTillNext" has elapsed
+end note
+
+deactivate task
+timer -> task : run ()
+
+activate timer
+deactivate timer
+
+ref over task
+US_06_SD_RUN
+end ref
+
+
+
+activate task
+
+deactivate timer
+
+
+end
+
+
+
+@enduml
+
+PlantUML version 1.2022.4(Sat Apr 09 14:29:17 WEST 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: pt
+Country: PT
+--></g></svg>

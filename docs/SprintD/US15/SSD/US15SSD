@@ -1,0 +1,21 @@
+@startuml
+autonumber
+actor "Center Coordinator" as coordinator
+
+activate coordinator
+coordinator -> ":System" : requests to check/export vaccination statistics
+activate ":System"
+":System" --> coordinator : requests data(name of the file and time interval)
+deactivate ":System"
+coordinator -> ":System" :inputs the data
+activate ":System"
+":System" --> coordinator : shows the data and asks for confirmation
+deactivate ":System"
+coordinator -> ":System" :confirms/denys the information
+activate ":System"
+":System" --> coordinator : displays vaccination statistics
+":System" -->":System" : exports vaccination statistics to a csv file
+":System" --> coordinator : informs success/failure message
+deactivate ":System"
+deactivate coordinator
+@enduml

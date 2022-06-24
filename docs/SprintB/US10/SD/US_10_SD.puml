@@ -1,0 +1,130 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Administrator" as administrator
+
+participant "RegisterEmployeeUi" as ui
+participant "RegisterEmployeeController" as controller
+
+participant "EmployeeStore:UserStore" as store
+participant ":Company" as company
+participant ":EmployeeList" as list
+participant ":dto:EmployeeDto" as dto
+participant ":user:Employee" as user
+participant ":AuthFacade" as facade
+
+activate administrator
+
+administrator -> ui : requests to register a new employee
+activate ui
+
+ui --> administrator : requests data (role, name, address, phoneNumber, e-mail, citizenCardNumber)
+deactivate ui
+
+administrator -> ui : inputs the data
+activate ui
+
+ui->controller: registerEmployee(dto)
+activate controller
+
+note right
+    dto is composed by all the inputed data
+end note
+
+controller -> company : employeeStore = getUserStore()
+activate company
+deactivate company
+
+controller -> store : user = registerEmployee(dto)
+activate store
+
+store -> list : employee = toEmployee(dto)
+activate list
+
+list -> dto : role = getEmployeeRole()
+activate dto
+deactivate dto
+
+list -> dto : name = getEmployeeName()
+activate dto
+deactivate dto
+
+list -> dto : address = getEmployeeAddress()
+activate dto
+deactivate dto
+
+list -> dto : phoneNumber = getEmployeePhoneNumber()
+activate dto
+deactivate dto
+
+list -> dto : e-mail = getEmployeeEmail()
+activate dto
+deactivate dto
+
+list -> dto : citizenCardNumber = getEmployeeCitizenCardNumber()
+activate dto
+deactivate dto
+
+
+
+deactivate controller
+
+ui --> administrator : presents the data and asks for confirmation
+
+deactivate store
+deactivate ui
+
+administrator -> ui : confirmation of the information
+
+activate ui
+
+ui-> controller : registerEmployee()
+
+activate controller
+
+controller -> store : registerEmployee(user)
+
+activate store
+
+store -> user : role = getRole()
+activate user
+deactivate user
+
+store -> user : name = getName()
+activate user
+deactivate user
+
+store -> user : address = getAddress()
+activate user
+deactivate user
+
+store -> user : phoneNumber = getPhoneNumber()
+activate user
+deactivate user
+
+store -> user : email = getEmail()
+activate user
+deactivate user
+
+store -> user : citizenCardNumber = getcitizenCardNumber()
+activate user
+deactivate user
+
+store -> facade : result = addEmployee(role, name, address, phoneNumber, email, citizenCardNumber)
+activate facade
+deactivate facade
+
+store -> store : addEmployee(user)
+
+store --> controller : result
+deactivate store
+
+controller --> ui : result
+deactivate controller
+
+ui--> administrator : informs the result
+
+
+@enduml

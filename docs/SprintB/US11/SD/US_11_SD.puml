@@ -1,0 +1,44 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Administrator" as administrator
+
+participant ":AdminListEmployeesUi" as ui
+participant ":ListEmployeesController" as controller
+
+participant "EmployeeStore" as store
+participant ":Company" as company
+participant ":EmployeeMapper" as mapper
+
+
+activate administrator
+
+administrator -> ui : requests to list employees
+activate ui
+
+ui --> administrator : requests data (employeeRole)
+deactivate ui
+
+administrator -> ui : inputs the data
+activate ui
+
+ui -> controller : getEmployeeList (role)
+activate controller
+
+
+
+controller -> company : employeeStore = getEmployeeStore()
+activate company
+deactivate company
+
+controller -> store : employeeList = getEmployees()
+
+controller -> mapper : employeeDtoList = toEmployeeDtoList(employeeList)
+
+ui -> administrator : displays employees
+
+
+
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Recepcionist" as user
+
+activate user
+
+user -> ":System" :requests to schedule a vaccine administration
+activate ":System"
+":System" --> user :shows the vaccination centers
+deactivate ":System"
+
+user -> ":System": selects the desired vaccination center
+
+activate ":System"
+":System" --> user : requests data (snsNumber,date,hour,vaccineType)
+deactivate ":System"
+user -> ":System" : inputs the data
+
+activate ":System"
+":System" --> user: shows the data and asks for confirmation
+deactivate ":System"
+
+user -> ":System" : confirms/deny the data
+
+activate ":System"
+":System" --> user : informs success/failure message
+":System" --> user : if authorized sends SMS in case of success
+deactivate ":System"
+
+@enduml

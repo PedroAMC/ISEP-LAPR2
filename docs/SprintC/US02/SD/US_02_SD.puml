@@ -1,0 +1,252 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Recepcionist" as user
+
+participant ScheduleVaccineUI as ui
+participant ScheduleVaccineController as controller
+participant Company as company
+
+participant VaccinationCenterStore as centerstore
+participant VaccinationCenterMapper as centermapper
+participant "centersList\n:List<VaccinationCenter>" as centerlist
+participant "centersListDto\n:List<VaccinationCenterDto>" as centerlistdto
+participant "vaccinationCenterDto:VaccinationCenterDto" as centerdto
+participant "vaccinationCenter:VaccinationCenter" as center
+
+participant VaccineTypeStore as typestore
+participant VaccineTypeMapper as typemapper
+participant "vaccineTypes\n:List<VaccineType>" as typelist
+participant "vaccineTypesDto\n:List<VaccineTypeDto>" as typelistdto
+participant "vaccineType:VaccineType" as type
+participant "vaccineTypeDto:VaccineTypeDto" as typedto
+
+participant SnsUserStore as userstore
+participant AuthFacade as facade
+
+participant ScheduleStore as store
+participant ScheduleMapper as mapper
+participant DateMapper as datemapper
+participant HourMapper as hourmapper
+participant "schedule:\nSchedule" as schedule
+
+
+activate user
+
+user -> ui : requests to schedule a vaccine
+activate ui
+
+ui --> user : requests for data(snsNumber)
+deactivate ui
+
+user -> ui : inputs data
+activate ui
+
+ui-> controller : verifySnsNumber()
+activate controller
+
+controller -> company : userstore = getUserStore()
+activate company
+deactivate company
+
+controller -> userstore : verifyNumber(snsNumber)
+deactivate controller
+activate userstore
+deactivate userstore
+deactivate ui
+
+ui -> controller : getListOfCenters()
+activate ui
+deactivate userstore
+
+activate controller
+
+controller -> company : vaccinationCenterStore = getVaccinationCenterStore()
+activate company
+deactivate company
+
+controller -> centerstore : getListOfCenters()
+activate centerstore
+
+centerstore -> centermapper : listToDto(centersList)
+
+activate centermapper
+
+create centerlistdto
+centermapper --> centerlistdto : create()
+
+loop for every center in centersList
+
+centermapper -> centerlist : vaccinationCenter = get(i)
+activate centerlist
+
+deactivate centerlist
+
+centermapper -> centermapper : vaccinationCenterDto = centerToDto (center)
+activate centermapper
+deactivate centermapper
+
+create centerdto
+
+centermapper --> centerdto : create (...)
+
+centermapper -> centerlistdto : add(vaccinationCenterDto)
+activate centerlistdto
+deactivate centerlistdto
+
+end
+
+centermapper --> centerstore : centersListDto
+deactivate centermapper
+
+centerstore --> controller : centersListDto
+deactivate centerstore
+
+controller --> ui : centersListDto
+deactivate controller
+
+ui --> user : shows the vaccination centers
+
+deactivate ui
+
+user -> ui : selects the desired vaccination center
+
+activate ui
+
+ui -> controller : getListOfTypes()
+activate controller
+
+controller -> company: vaccineTypeStore = getVaccinationCenterStore()
+activate company
+deactivate company
+
+controller -> typestore :  getListOfTypes()
+activate typestore
+
+typestore -> typemapper : listToDto(vaccineTypes)
+activate typemapper
+
+create typelistdto
+typemapper --> typelistdto: create()
+
+loop for each vaccine type in vaccineTypes
+
+typemapper -> typelist : vaccineType = get(i)
+activate typelist
+deactivate typelist
+
+typemapper -> typemapper: vaccineTypeDto = toDto(vaccineType)
+activate typemapper
+deactivate typemapper
+
+create typedto
+typemapper --> typedto : create(..)
+
+typemapper -> typelistdto : add(vaccineTypeDto)
+activate typelistdto
+deactivate typelistdto
+
+end
+
+typemapper --> typestore : vaccineTypesDto
+
+deactivate typemapper
+
+typestore --> controller : vaccineTypesDto
+
+deactivate typestore
+
+controller --> ui : vaccineTypesDto
+
+deactivate controller
+
+ui --> user: shows the vaccine types
+
+deactivate ui
+
+user -> ui : selects the desired vaccine type
+activate ui
+ui --> user : requests data (date,hour)
+deactivate ui
+
+user -> ui: inputs the data
+activate ui
+
+ui -> controller: createSchedule(scheduleDto,vaccineTypeDto)
+
+activate controller
+
+
+controller -> store : schedule = createNewSchedule(scheduleDto)
+
+activate store
+
+store -> mapper : schedule =  toSchedule(scheduleDto)
+activate mapper
+
+mapper -> datemapper : date = toDate(dateDto)
+activate datemapper
+deactivate datemapper
+
+mapper -> hourmapper : hour = toHour(hourDto)
+activate hourmapper
+deactivate hourmapper
+
+mapper -> centermapper: vaccinationCenter = toVaccinationCenter(vaccinationCenterDto)
+activate centermapper
+centermapper --> mapper: vaccinationCenter
+deactivate centermapper
+
+create schedule
+mapper -> schedule : create (date,hour,vaccinationCenter)
+
+schedule -> schedule : validateData(date,hour,vaccinationCenter)
+activate schedule
+deactivate schedule
+
+mapper --> store : schedule
+
+deactivate mapper
+
+store --> controller: schedule
+
+deactivate store
+
+deactivate controller
+
+ui --> user : shows the data and asks for confirmation
+
+deactivate ui
+
+user -> ui : confirms the data
+
+activate ui
+ui -> controller : saveSchedule()
+
+activate controller
+
+controller -> store : saveSchedule(snsNumber, schedule, vaccineType)
+activate store
+
+store -> store: validateSchedule(snsNumber, schedule,vaccineType)
+activate store
+deactivate store
+
+store -> store: saveSchedule(snsNumber, schedule,vaccineType)
+activate store
+deactivate store
+
+create notification
+store -> notification : create(...)
+
+store -> sender : sendNotification(notification)
+activate sender
+deactivate sender
+
+deactivate store
+deactivate controller
+
+ui --> user : receives message informing the result
+@enduml

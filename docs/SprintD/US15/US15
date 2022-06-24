@@ -1,0 +1,328 @@
+# US 15 - To check and export vaccination statistics to a CSV file
+
+## 1. Requirements Engineering
+
+
+### 1.1. User Story Description
+
+As a center coordinator,I intend to check and export vaccination statistics.I want to export,to a csv file,the total number of fully vaccinated users per day.
+
+### 1.2. Customer Specifications and Clarifications
+
+
+**From the specifications document:**
+> "The Center Coordinator wants to monitor the vaccination process, to see statistics and charts, to evaluate the performance of the vaccination process, generate reports and analyze data from other centers, including data from law systems."
+
+>	Access to the vaccination statistics file is exclusive to the Center Coordinator of the respective Vaccination Center.
+
+**From the client clarifications:**
+
+> **Question:** In this US should the Center Coordinator check and export the Vaccination Statistics of the Center where he/she works at or should just check and export the Vaccination Statistics of all centers?
+> 
+> **Answer:** The center coordinator can only export statistics from the vaccination center that he coordinates.
+-
+
+> **Question:** Should the user introduce the name of the file intended to export the vaccination statistics ?
+>
+> **Answer:** The user should introduce the name of the file.
+-
+
+> **Question:** Are the vaccination statistics refering only to the fully vaccinated users or refering to something more ?
+> 
+> **Answer:**  Only to fully vaccinated users.
+-
+
+>**Question:** When exporting vaccination statistics,do we export the data from all days available in the system or does the center coordinator chooses the time interval?
+> 
+> **Answer:**  The user should define a time interval (two dates).
+-
+
+>**Question:** Is there any kind of format our exported data should follow?
+> 
+> **Answer:** Data format: date; number of fully vaccinated user.
+-
+
+>**Question:** Should we group all sns users fully vaccinated per day of different vaccine types into a total number of that day? Or should we divide the number by vaccine types?
+> 
+> **Answer:** The output data should be the date and the number of fully vaccinated users.
+
+### 1.3. Acceptance Criteria
+
+* **AC1:** The center coordinator can only export statistics from the vaccination center that he coordinates.
+* **AC2:** The user should introduce the name of the file intended to export the vaccination statistics.
+* **AC3:** The vaccination statistics are the total number of fully vaccinated users per day.
+* **AC4:** The center coordinator can only export statistics from the vaccination center that he coordinates.
+### 1.4. Found out Dependencies
+
+* There is a dependency to "US08 record the administration of a vaccine to a SNS user" since at least a list of Users Vaccinated must exist to export a csv file with the vaccination statistics.*
+
+### 1.5 Input and Output Data
+
+
+**Input Data:**
+
+* Typed data:
+    * Name of the file
+    * Time interval
+
+* Selected data:
+    * Check/Export Vaccination Statistics
+    * Export Vaccination Statistics
+
+**Output Data:**
+
+* Vaccination Statistics (the **date** and the **number of fully vaccinated users per day**)
+* Csv file with Vaccination Statistics (the **date** and the **number of fully vaccinated users per day**)
+
+### 1.6. System Sequence Diagram (SSD)
+
+![US15_SSD](SSD/US15SSD.svg)
+
+### 1.7 Other Relevant Remarks
+
+## 2. OO Analysis
+
+### 2.1. Relevant Domain Model Excerpt
+
+![US006_MD](MD/US15MD.svg)
+
+### 2.2. Other Remarks
+
+n/a
+
+
+## 3. Design - User Story Realization
+
+### 3.1. Rationale
+
+**SSD - Alternative 1 is adopted.**
+
+| Interaction ID | Question: Which class is responsible for... | Answer  | Justification (with patterns)  |
+|:-------------  |:--------------------- |:------------|:---------------------------- |
+| Step 1  		 |	... interacting with the actor? | CreateTaskUI   |  Pure Fabrication: there is no reason to assign this responsibility to any existing class in the Domain Model.           |
+| 			  		 |	... coordinating the US? | CreateTaskController | Controller                             |
+| 			  		 |	... instantiating a new Task? | Organization   | Creator (Rule 1): in the DM Organization has a Task.   |
+| 			  		 | ... knowing the user using the system?  | UserSession  | IE: cf. A&A component documentation.  |
+| 			  		 |	... knowing to which organization the user belongs to? | Platform  | IE: has registed all Organizations |
+| 			  		 |							 | Organization   | IE: knows/has its own Employees|
+| 			  		 |							 | Employee  | IE: knows its own data (e.g. email) |
+| Step 2  		 |							 |             |                              |
+| Step 3  		 |	...saving the inputted data? | Task  | IE: object created in step 1 has its own data.  |
+| Step 4  		 |	...knowing the task categories to show? | Platform  | IE: Task Categories are defined by the Platform. |
+| Step 5  		 |	... saving the selected category? | Task  | IE: object created in step 1 is classified in one Category.  |
+| Step 6  		 |							 |             |                              |              
+| Step 7  		 |	... validating all data (local validation)? | Task | IE: owns its data.| 
+| 			  		 |	... validating all data (global validation)? | Organization | IE: knows all its tasks.| 
+| 			  		 |	... saving the created task? | Organization | IE: owns all its tasks.| 
+| Step 8  		 |	... informing operation success?| CreateTaskUI  | IE: is responsible for user interactions.  | 
+
+### Systematization ##
+
+According to the taken rationale, the conceptual classes promoted to software classes are:
+
+* Organization
+* Platform
+* Task
+
+Other software classes (i.e. Pure Fabrication) identified:
+
+* CreateTaskUI
+* CreateTaskController
+
+
+## 3.2. Sequence Diagram (SD)
+
+![US006_SD](SD/US15SD.svg)
+
+## 3.3. Class Diagram (CD)
+
+**From alternative 1**
+
+![US006_CD](US006_CD.svg)
+
+# 4. Tests
+
+**Test 1:** 
+
+	@Test
+    public void testDateIsWithinTimeInterval2(){
+        Date date=new Date(1,4,2022);
+        Assertions.assertFalse(StatisticsStore.dateIsWithinTimeInterval(date, "3,4,2022-10,5,2022"));
+    }
+	
+
+
+**Test 2:** 
+
+	@Test
+    public void testIsEqual(){
+        List<Pair<Date,Integer>> list=new ArrayList<>();
+        Date date=new Date(1,4,2022);
+        list.add(new Pair<>(new Date(1,4,2019),5));
+        list.add(new Pair<>(new Date(1,4,2021),3));
+        list.add(new Pair<>(new Date(1,4,2020),2));
+        list.add(new Pair<>(new Date(1,4,2022),7));
+        Assertions.assertTrue(StatisticsStore.isEqual(date,list));
+    }
+
+**Test 3:** 
+
+	@Test
+    public void testCounterPairDate(){
+        Date date =new Date(4,2,2022);
+        List<Date> list=new ArrayList<>();
+        list.add(new Date(4,2,2022));
+        list.add(new Date(3,2,2022));
+        list.add(new Date(4,2,2022));
+        list.add(new Date(1,2,2022));
+        Assertions.assertEquals(2,StatisticsStore.counterPairDate(list,date));
+    }
+
+
+# 5. Construction (Implementation)
+
+
+## Class StatisticsController
+
+         /**
+     * Method to get the Vaccination Center in which the Coordinator works
+     *
+     * @param vac String contains the name of the vaccination center in which the coordinator works
+     */
+      public StatisticsDto checkVaccinationStatistics(String timeInterval, String vac){
+        return StatisticsStore.getFullyVaccinatedUsers(administrationstore,timeInterval,snsUserStore,getVaccinationCenter(vac),scheduleStore);
+    }
+
+    /**
+     * Method to export the Vaccination Statistics to a csv file
+     *
+     * @param list List contains the list of the total number of fully vaccinated users per day.
+     * @param fileName String contains the name of the file
+     */
+
+
+    public boolean exportVaccinationStatistics(List<Pair<DateDto, IntegerDto>> list, String fileName) throws IOException {
+        try {
+            FileWriter file = new FileWriter("out/"+fileName+".csv");
+            file.append(HEADER);
+            for (Pair<DateDto, IntegerDto> pair : list) {
+                file.append(String.valueOf(pair.getFirst().getDay())).append("/").append(String.valueOf(pair.getFirst().getMonth())).append("/").append(String.valueOf(pair.getFirst().getYear())).append(DELIMITER);
+                file.append(String.valueOf(pair.getSecond()));
+            }
+            file.close();
+            return true;
+        }catch(NullPointerException exception){
+            exception.printStackTrace();
+            return false;
+        }
+    }
+
+    /**
+     * Method to verify/validate the time interval
+     *
+     * @param timeInterval String contains the time interval of the statistics the user wants
+     */
+
+    public boolean verifyTimeInterval(String timeInterval){
+        if(timeInterval.trim().isEmpty() || timeInterval.isBlank() || timeInterval.isEmpty()){
+            throw new IllegalArgumentException("Time Interval can't be in blank");
+        }
+        String [] array=timeInterval.split("-");
+        String[] array2=array[0].split(",");
+        int []date1=new int[array2.length];
+        for (int i = 0; i < array2.length; i++) {
+            date1[i]=Integer.parseInt(array2[i]);
+        }
+        String[] array3=array[1].split(",");
+        int []date2=new int[array3.length];
+        for (int i = 0; i < array3.length; i++) {
+            date2[i]=Integer.parseInt(array3[i]);
+        }
+        Date firstDate=new Date(date1[0],date1[1],date1[2]);
+        Date secondDate=new Date(date2[0],date2[1],date2[2]);
+        if (!secondDate.moreRecent(firstDate)) {
+            throw new IllegalArgumentException("First date is more recent than the second one");
+        }
+        return true;
+    }
+
+
+## Class StatisticsStore
+
+
+		/**
+     * Method to get the StatisticsDto
+     *
+     * @param administrationsStore Store with the vaccine administrations
+     * @param timeInterval String contains the time interval of the statistics the user wants
+     * @param userStore Store with Users
+     * @param vac Vaccination Center in which the Coordinator works
+     */
+
+        public static StatisticsDto getFullyVaccinatedUsers(VaccineAdministrationStore administrationsStore, String timeInterval, SnsUserStore userStore, VaccinationCenter vac, ScheduleStore scheduleStore) {
+          List<VaccineAdministration> vaccineAdministrations=administrationsStore.getVaccineAdministrationsByVaccinationCenter(vac);
+          for(VaccineAdministration vacad : vaccineAdministrations){
+            Date date = vacad.getArrivalDate();
+            if(dateIsWithinTimeInterval(date,timeInterval)) {
+                String SnsNumber = vacad.getSnsUserNumber();
+                SnsUser user = userStore.getSnsUser(SnsNumber);
+                if(user.getVaccinationStatus(user,scheduleStore,vacad.get)=="final") {
+                    addFullyVaccinatedUser(date, list2);
+                }
+            }
+        }
+        list2tolist1(list1,list2);
+        return StatisticsMapper.statisticsToDto(list1);
+    }
+
+    /**
+     * Method to check if a certain date is within the Time Interval
+     *
+     * @param date   a certain date
+     * @param timeInterval String contains the time interval of the statistics the user wants
+     */
+
+    public static boolean dateIsWithinTimeInterval(Date date, String timeInterval) {
+        String [] array=timeInterval.split("-");
+        String[] array2=array[0].split(",");
+
+        int []date1=new int[array2.length];
+
+        for (int i = 0; i < array2.length; i++) {
+            date1[i]=Integer.parseInt(array2[i]);
+        }
+
+        String[] array3=array[1].split(",");
+        int []date2=new int[array3.length];
+
+        for (int i = 0; i < array3.length; i++) {
+            date2[i]=Integer.parseInt(array3[i]);
+        }
+
+        Date firstDate=new Date(date1[0],date1[1],date1[2]);
+        Date secondDate=new Date(date2[0],date2[1],date2[2]);
+
+        return date.isWithinTimeInterval(firstDate,secondDate);
+    }
+
+    /**
+     * Method to add  a certain date to a list of dates
+     *
+     * @param date  a certain date
+     * @param list list of dates
+     */
+
+    public static void addFullyVaccinatedUser( Date date, List<Date> list){
+        list.add(date);
+    }
+
+
+# 6. Integration and Demo
+
+* A new option on the Coordinator menu options was added.
+
+* Some demo purposes some tasks are bootstrapped while system starts.
+
+
+# 7. Observations
+N/A

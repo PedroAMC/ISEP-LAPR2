@@ -1,0 +1,84 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class RegisterEmployeeUi{
+}
+
+class RegisterEmployeeController{
+- EmployeeStore employeeStore
+- Employee employee
++ createEmployee (EmployeeDto dto)
++ boolean registerEmployee ()
+}
+
+class EmployeeStore{
+- list<Employee> employee
++ createEmployee (EmployeeDto dto)
+- validateEmployee (Employee employee)
++ registerEmployee (Employee employee)
+- addEmployee (Employee employee)
++ getEmployees()
+}
+
+
+class EmployeeList{
++ toEmployee(EmployeeDto dto)
+}
+
+class employee{
+- String role
+- String name
+- String address
+- int phoneNumber
+- String email
+- int citizenCardNumber
+
+- validateInformation(String role,String name, String address, int phoneNumber,String email,int citizenCardNumber)
+}
+
+class EmployeeDto {
+- String role
+- String name
+- String address
+- int phoneNumber
+- String email
+- int citizenCardNumber
+
++ getRole ()
++ getName ()
++ getAddress ()
++ getPhoneNumber ()
++ getEmail ()
++ getCitizenCardNumber ()
+}
+
+class Company {
+- String designation
+- AuthFacade authFacade
+- EmployeeStore employeeStore
+
++ getAuthFacade()
++ getEmployeeStore()
+}
+
+class AuthFacade {
++existsUser(email)
++addUserWithRole(role, name, address, phoneNumber, email,citizenCardNumber)
+
+}
+
+RegisterEmployeeUi .-> RegisterEmployeeController
+RegisterEmployeeUi .-> EmployeeDto
+RegisterEmployeeController .-> EmployeeStore
+RegisterEmployeeController.-> Company
+RegisterEmployeeController.-> EmployeeDto
+Company -> EmployeeStore : contains >
+Company -> AuthFacade : contains >
+EmployeeStore .-> EmployeeList
+EmployeeStore .--> EmployeeDto
+EmployeeStore .--> AuthFacade
+EmployeeStore ----> Employee : contains >
+EmployeeList .-> EmployeeDto
+
+
+@enduml

@@ -1,0 +1,76 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Administrator" as admin
+
+participant ":RegisterVaccineUi" as ui
+participant ":RegisterVaccineController" as controller
+participant "VaccineDto" as dto
+participant ":VaccineType" as type
+participant "VaccineStore" as store
+participant ":Vaccine" as vaccine
+
+
+activate admin
+
+admin -> ui : requests to specify a new vaccine
+activate ui
+
+ui -> controller : requests list of every vaccine type available
+activate controller
+controller -> type : requests list
+activate type
+type --> controller : gives data (list of every vaccine type)
+deactivate type
+
+controller --> ui : gives list of every vaccine type
+deactivate controller
+
+ui --> admin : gives list of possible vaccine types
+deactivate ui
+
+admin-> ui : inputs the desired vaccine type
+activate ui
+ui --> admin : requests data (name, total amount of doses, dosage, time interval, minimum age requirment, maximum age requirement)
+deactivate ui
+
+admin -> ui : gives requested data
+activate ui
+ui -> controller : asks to create a vaccine
+
+activate controller
+
+controller -> dto : gives data
+deactivate controller
+activate dto
+
+dto -> store : creates a vaccine
+deactivate dto
+activate store
+
+store -> store : checks if the vaccine already exists
+
+store --> ui : gives the corresponding answer
+deactivate store
+
+ui --> admin : either tells if the vaccine already exists, or asks to confirm the creation of the vaccine
+deactivate ui
+
+admin -> ui : gives the response
+activate ui
+ui -> controller : confirms the creation of the  vaccine
+deactivate ui
+
+activate controller
+
+controller -> vaccine : creates a new vaccine
+activate vaccine
+vaccine -> store : stores the vaccine in the list
+deactivate vaccine
+activate store
+deactivate store
+
+deactivate admin
+@enduml

@@ -1,0 +1,268 @@
+@startuml
+
+package gui {
+class ImportGui{
+}
+}
+
+package Controller {
+class ImportGuiController{
++initialize()
++doImport(ActionEvent event)
++goBack(ActionEvent event)
+
+}
+
+}
+
+
+package Domain {
+
+package Store {
+class VaccineAdministrationStore{
+-List<VaccineAdministration> vaccineAdministrations
++createVaccineAdministration(VaccineAdministrationDto vaccineAdministrationDto)
++validateVaccineAdministration(VaccineAdministration vaccineAdministration)
++addVaccineAdministration(VaccineAdministration vaccineAdministration)
++getVaccineAdministrations()
++getVaccineAdministrationsByDateAndCenter()
++getVaccineAdministrationsByVaccinationCenter()
+
+}
+
+class VaccinationCenterStore{
+- HashMap<String,VaccinationCenter> centers
++ getListOfCenters()
++ findVaccinationCenter(String vaccinationCenterName)
+}
+
+
+}
+
+package Model {
+
+class VaccineAdministration {
+-String snsUserNumber
+-String vaccineName
+-String dose
+-String lotNumber
+-Date scheduleDate
+-Hour scheduleHour
+-Date arrivalDate
+-Hour arrivalHour
+-Date nurseAdministrationDate
+-Hour nurseAdministrationHour
+-Date leavingDate
+-Hour leavingHour
+-VaccinationCenter vaccinationCenter
++getSnsUserNumber()
++getVaccineName()
++getDose()
++getLotNumber()
++getScheduleDate()
++getScheduleHour()
++getArrivalDate()
++getArrivalHour()
++getNurseAdministrationDate()
++getNurseAdministrationHour()
++getLeavingDate()
++getLeavingHour()
++getVaccinationCenter()
++setSnsUserNumber()
++setVaccineName()
++setDose()
++setLotNumber()
++setScheduleDate()
++setScheduleHour()
++setArrivalDate()
++setArrivalHour()
++setNurseAdministrationDate()
++setNurseAdministrationHour()
++setLeavingDate()
++setLeavingHour()
++setVaccinationCenter()
++toString()
+
+}
+
+class Company {
+- String designation
+- AuthFacade authFacade
+- SnsUserStore snsUserStore
+- EmployeeStore employeeStore
+- VaccineTypeStore vaccineTypeStore
+- VaccinationCenterStore vaccinationCenterStore
+- ScheduleStore scheduleStore
+- VaccineAdministrationStore vaccineAdministrationStore
+
++ String getDesignation()
++ AuthFacade getAuthFacade()
++ SnsUserStore getSnsUserStore()
++ EmployeeStore getEmployeeStore()
++ VaccineTypeStore getVaccineTypeStore()
++ VaccinationCenterStore getVaccinationCenterStore()
++ ScheduleStore getScheduleStore()
++ VaccineAdministrationStore getVaccineAdministrationStore()
+
+}
+
+class VaccinationCenter {
+- String name
+- String address
+- String phoneNumber
+- Email email
+- String fax
+- String websiteAddress
+- List<Pair<SnsUser,Hour>> usersArrived
+- Coordinator centerCoordinator
+- HashMap<Integer,HashMap<Integer,HashMap<Integer,CenterDays>>> yearSchedule
+- CenterHours hours
+- Slot slot
+- HashMap<Date,Integer> dailyVaccinated
+- validateData (String name, String address, String phoneNumber, String email, String fax, String websiteAddress)
+
+}
+
+}
+
+}
+
+package Utils {
+
+interface Algorithms {
++determineLeastEffectiveTimeInterval(List<TimeSlot> centerPerformance)
++getIntervalSum(List<TimeSlot> centerPerformance, int start, int end)
++sum(final int[] seq)
+
+}
+
+class TimeInterval {
+-int sum
+-List<TimeSlot> slots
++getSum()
++getSlots()
+}
+
+class TimeSlot {
+-Hour time
+-int counter
++getTime()
++getCounter()
++incrementCounter()
++decrementCounter()
+
+}
+
+class Hour {
+-int horas
+-int minutos
+-int segundos
++addMinutes (int addedMinutes)
++compareTo(Hour outroTempo)
+
+}
+
+}
+
+package Mapper {
+
+class VaccinationCenterMapper {
++ toVaccinationCenter(VaccinationCenterDto dto)
++ listToDto (List<VaccinationCenter> centers)
++ centerToDto (VaccinationCenter vaccinationCenter)
+}
+
+class VaccineAdministrationMapper {
++toVaccineAdministrationDto(VaccineAdministration vaccineAdministration)
++toVaccineAdministration (VaccineAdministrationDto vaccineAdministrationDto)
+
+}
+
+}
+
+package Dto {
+
+class VaccinationCenterDto{
+- String name
+- String address
+- String phoneNumber
+- String email
+- String fax
+- String websiteAddress
+- Coordinator centerCoordinator
+- Hour openHour
+- Hour closeHour
+- int slotDuration
+- int capacity
+- HashMap<Date,Integer> dailyVaccinated
++ getName()
++ getAddress()
++ getPhoneNumber()
++ getEmail()
++ getFax()
++ getWebsiteAddress()
++ getCenterCoordinator()
++ getOpenHour()
++ getCloseHour()
++ getSlotDuration()
++ getCapacity()
++ getDailyVaccinated
+
+}
+
+class VaccineAdministrationDto {
+-String snsUserNumber
+-String vaccineName
+-String dose
+-String lotNumber
+-Date scheduleDate
+-Hour scheduleHour
+-Date arrivalDate
+-Hour arrivalHour
+-Date nurseAdministrationDate
+-Hour nurseAdministrationHour
+-Date leavingDate
+-Hour leavingHour
+-VaccinationCenter vaccinationCenter
++getSnsUserNumber()
++getVaccineName()
++getDose()
++getLotNumber()
++getScheduleDate()
++getScheduleHour()
++getArrivalDate()
++getArrivalHour()
++getNurseAdministrationDate()
++getNurseAdministrationHour()
++getLeavingDate()
++getLeavingHour()
++getVaccinationCenter()
+
+}
+
+ImportGui .-> ImportGuiController
+ImportGuiController .-> TimeSlot
+ImportGuiController .-> TimeInterval
+ImportGuiController .-> Hour
+ImportGuiController --|> Algorithms
+TimeSlot --|> Hour
+TimeInterval --|> Hour
+Company --> VaccinationCenterStore : contains >
+Company --> VaccineAdministrationStore : contains >
+VaccinationCenterStore .--> VaccinationCenterMapper
+VaccineAdministrationStore .--> VaccineAdministrationMapper
+VaccinationCenterStore -> VaccinationCenter : stores >
+VaccineAdministrationStore -> VaccineAdministration : stores >
+Company .-> Hour
+Company .-> TimeInterval
+Company .-> TimeSlot
+VaccinationCenterMapper ..> VaccinationCenterDto
+VaccineAdministrationMapper ..> VaccineAdministrationDto
+VaccinationCenterStore ...> VaccinationCenterDto
+VaccineAdministrationStore ...> VaccineAdministrationDto
+ImportGuiController .-> Company
+ImportGuiController .-> VaccineAdministrationStore
+ImportGuiController .-> VaccinationCenterStore
+
+}
+@enduml

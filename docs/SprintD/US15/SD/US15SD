@@ -1,0 +1,94 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Coordinator" as coordinator
+
+participant ":StatisticsUI" as ui
+participant ":StatisticsController" as controller
+
+participant ":StatisticsStore" as statisticsstore
+participant ":VaccineAdministrationStore" as administrationstore
+participant ":VaccineAdministration" as administration
+participant ":SnsUserStore" as userStore
+participant ":Company" as company
+participant ":SnsUser" as user
+participant ":StatisticsMapper" as mapper
+participant ":StatisticsDto" as statisticsdto
+participant ":Date" as Date
+participant ":VaccinationCenterStore" as VacCenterstore
+participant ":ScheduleStore" as scheduleStore
+
+activate coordinator
+coordinator->ui:requests to check/export vaccination statistics
+activate ui
+ui-->coordinator:requests data(name of the file and time interval)
+coordinator->ui:inputs the data
+ui->controller:verifyTimeInterval(timeInterval)
+activate controller
+controller->Date:validateDate(Date1)
+activate Date
+controller->Date:validate(Date2)
+controller->Date:Date1.morerecent(Date2)
+deactivate Date
+ui->controller:veriftyFileName(fileName)
+ui-->coordinator:shows data and requests confirmation
+coordinator->ui:confirms data
+ui->controller:checkVaccinationStatistics(fileName,VaccinationCenterName)
+controller->company:getVaccineAdministrationStore()
+activate company
+controller->company:getSnsUserStore()
+controller->company:getStatisticsStore()
+controller->company:getVaccinationCenterStore();
+deactivate company
+controller->vacCenterStore:VaccinationCenter=findVaccinationCenter(VaccinationCenterName)
+activate vacCenterStore
+deactivate vacCenterStore
+controller->statisticsstore:getFullyVaccinatedUsers(administrationstore,timeInterval,snsUserStore,VaccinationCenter)
+activate administrationstore
+deactivate administrationstore
+activate statisticsstore
+loop #Yellow Vaccineadminstrations length size
+note right statisticsstore
+Loop goes through Vaccineadministrations List
+end note
+statisticsstore->administration:date=getDate()
+activate administration
+deactivate administration
+alt #Silver date is within the timeInterval
+statisticsstore->user:state=getState(snsUser)
+activate user
+deactivate user
+alt #SeaGreen state=1
+note right statisticsstore
+state  is 1 when the snsUser has taken all the doses/is fully vaccinated
+end note
+statisticsstore->statisticsstore:addFullyVaccinatedUser(VaccineAdministration)
+end
+end
+end
+statisticsstore->mapper:fullyVaccinatedUserstoDto(fullyVaccinatedUsers)
+activate mapper
+mapper-->statisticsstore:Dtolist FullyVaccinatedUsers
+deactivate mapper
+statisticsstore-->controller: Dtolist FullyVaccinatedUsers
+deactivate statisticsstore
+controller-->ui:Dtolist FullyVaccinatedUsers
+
+note right ui
+Loop goes through DtoList FullyVaccinatedUsers
+end note
+ui->statisticsdto:UserNumber=getSnsUserNumber()
+
+ui-->coordinator:displays Vaccination Statistics
+ui->controller:exportVaccinationStatistics(Dtolist FullyVaccinatedUsers)
+
+controller-->ui:result
+deactivate controller
+ui-->coordinator:informs operation success
+deactivate ui
+deactivate statisticsstore
+deactivate coordinator
+
+@enduml

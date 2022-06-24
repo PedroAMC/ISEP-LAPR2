@@ -1,0 +1,51 @@
+@startuml
+
+class VaccinationCenter
+{
+-String pandemic
+-String name
+-String address
+-int phonenumber
+-int faxnumber
+-string website address
+-string openinghours
+-string closinghours
+-int slotduration
+-int maxvaccines
+}
+
+class CommunityMassVaccinationCenter
+{
+- String type
+-String[] brands
++create(data)
++ Validateinformation()
+}
+
+class HealthCareCenter {
+- String[] types
+- String[] brands
++create(data)
++ Validateinformation()
+}
+
+class RegisterVaccinationCenterUI {
+
+}
+
+class RegisterVaccinationCenterController{
++createHealthCareCenter(String pandemic,String name,String address,int phonenumber,int faxnumber,string website address,string openinghours,string closinghours,int slotduration,int maxvaccines)
++createCommunityMassVaccinationCenter(String pandemic,String name,String address,int phonenumber,int faxnumber,string website address,string openinghours,string closinghours,int slotduration,int maxvaccines)
+}
+class VaccinationCenterStore{
++RegisterVaccinationCentre(data)
++ValidateVaccinationCentre(vaccinacioncentre)
+}
+
+RegisterVaccinationCenterUI ..> RegisterVaccinationCenterController
+RegisterVaccinationCenterController ..>VaccinationCenterStore
+VaccinationCenterStore..>VaccinationCenter
+VaccinationCenter-->HealthCareCenter
+VaccinationCenter-->CommunityMassVaccinationCenter
+
+@enduml

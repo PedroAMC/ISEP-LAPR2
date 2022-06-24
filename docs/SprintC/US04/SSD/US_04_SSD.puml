@@ -1,0 +1,39 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Receptionist" as receptionist
+
+activate receptionist
+
+receptionist -> ":System" : requests to register arrival of a SNS User
+activate ":System"
+":System" --> receptionist : requests user snsNumber
+deactivate ":System"
+
+receptionist -> ":System" : inputs the snsNumber
+
+
+
+alt #LightGreen user has a vaccine scheduled
+    activate ":System"
+    ":System" --> receptionist : shows data and requests confirmation to register arrival of the SNS User
+    deactivate ":System"
+
+    receptionist -> ":System" : confirms data and registers arrival of the SNS User
+
+    activate ":System"
+    ":System" --> receptionist : informs operation success
+
+autonumber stop
+else #Salmon user doesn't have a vaccine scheduled
+
+    ":System" --> receptionist : **4** informs receptionist that the user doesn't have any vaccine scheduled
+    ":System" --> receptionist : **5** ends operation
+
+    deactivate ":System"
+    deactivate receptionist
+    end
+
+@enduml

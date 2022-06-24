@@ -1,0 +1,126 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor coordinator as "Coordinator"
+
+participant ":AnalyzeCenterPerformanceUi" as ui
+participant ":AnalyzeCenterPerformanceController" as controller
+participant "VaccineAdministration" as vaccine
+participant "VaccineAdministrationStore" as store
+participant "VaccinationCenterStore" as centerStore
+participant "TimeInterval" as interval
+participant "TimeSlot" as slot
+participant ":Company" as company
+participant "VaccineAdministrationMapper" as mapper
+participant "VaccineAdministrationDto" as dto
+
+
+
+activate coordinator
+
+coordinator -> ui : requests to analyze center performance
+activate ui
+
+ui --> coordinator : requests data (date, timeInterval)
+deactivate ui
+coordinator -> ui : inputs requested data
+activate ui
+ui --> coordinator : asks to confirm data
+deactivate ui
+coordinator -> ui : confirms data
+activate ui
+ui -> controller : getVaccinationCenter(coordinatorCenterName)
+activate controller
+controller -> company : vaccinationCenterStore = getVaccinationCenterStore()
+activate company
+deactivate company
+controller -> centerStore : findVaccinationCenter(coordinatorCenterName)
+activate centerStore
+deactivate centerStore
+deactivate controller
+ui -> controller : verifyInputDate(date, vaccinationCenter)
+activate controller
+controller -> company : vaccineAdministrationStore = getVaccinatineAdministrationStore()
+activate company
+deactivate company
+deactivate controller
+ui -> controller : inputList = createInputList(timeInterval, date, vaccinationCenter)
+activate controller
+controller -> store : dayList = getVaccineAdministrationsByDateAndCenter(date, vaccinationCenter)
+activate store
+loop for each vaccineAdministration in vaccineAdministrationList
+alt vaccineAdministration.getDate().equals(date) && vaccinationCenter.getVaccinationCenter().equals(vaccinationCenter)
+store -> store : dayList.add(vaccineAdministration)
+end
+end
+store -> mapper : dayListDto = toDtoList(dayList)
+activate mapper
+mapper -> dto : create
+activate dto
+deactivate dto
+deactivate mapper
+deactivate store
+loop while openingHours.compareTo(closingHours) <= 0
+controller -> slot : slot = new TimeSlot(openingHours)
+activate slot
+deactivate slot
+controller -> controller : inputList.add(slot)
+controller -> controller : openingHours = openingHours.addMinutes(timeInterval)
+end
+loop for VaccineAdministration v : dayList
+controller -> vaccine : incrementTime = v.getArrivalHour()
+activate vaccine
+deactivate vaccine
+controller -> vaccine : decrementTime = v.getLeavingHour()
+activate vaccine
+deactivate vaccine
+loop for int i = 1; i < inputList.size(); i++
+controller -> controller : slot = inputList.get(i-1)
+controller -> slot : slotTime = slot.getTime()
+activate slot
+deactivate slot
+alt !incrementTime.isMaior(inputList.get(i).getTime() && increment = false
+controller -> slot : slot.incrementCounter()
+activate slot
+deactivate slot
+controller -> controller : increment = true
+end
+alt !decrementTime.isMaior(inputList.get(i).getTime() && decrement = false
+controller -> slot : slot.decrementCounter()
+activate slot
+deactivate slot
+controller -> controller : decrement = true
+end
+alt increment = true && decrement = true
+controller -> controller : break loop
+end
+end
+end
+deactivate controller
+ui -> controller : leastEffectiveTimeInterval = determineLeastEffectiveTimeInterval(inputList)
+activate controller
+controller -> controller : max = 0, startIndex = 0, finalIndex = 0
+loop for int firstIndex = 0; firstIndex < inputList.size(); firstIndex++
+controller -> controller : sum = 0
+loop for int secondIndex = 0; secondIndex < inputList.size(); secondIndex++
+controller -> controller : slot = inputList.get(secondIndex)
+controller -> slot : counter = slot.getCounter()
+activate slot
+deactivate slot
+controller -> controller : sum = sum + counter
+alt max < sum
+controller -> controller : startIndex = finalIndex, finalIndex = secondIndex, max = sum
+end
+end
+end
+controller -> interval : leastEffectiveTimeInterval = new TimeInterval(max, inputList.subList(startIndex, finalIndex + 1))
+activate interval
+deactivate interval
+deactivate controller
+ui -> interval : leastEffectiveSlots = leastEffectiveTimeInterval.getSlots()
+activate interval
+deactivate interval
+ui --> coordinator : shows the input list, maximum sum contiguous sublist and its sum, and the time interval corresponding to this sublist (least effective time interval)
+@enduml

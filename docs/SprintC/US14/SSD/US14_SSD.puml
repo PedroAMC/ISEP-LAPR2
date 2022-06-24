@@ -1,0 +1,22 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Administrator" as administrator
+
+activate administrator
+
+administrator -> ":System" : requests to import a CSV file containing a set of users
+activate ":System"
+":System" --> administrator : requests the file path
+deactivate ":System"
+
+administrator -> ":System" : inputs file path to the CSV file with user data (Name, Sex, Birth Date, Address, Phone Number, E-mail, SNS User Number and Citizen Card Number)
+activate ":System"
+":System" --> administrator : informs success or failure message
+deactivate ":System"
+
+deactivate administrator
+
+@enduml

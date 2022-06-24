@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="377px" preserveAspectRatio="none" style="width:975px;height:377px;background:#FFFFFF;" version="1.1" viewBox="0 0 975 377" width="975px" zoomAndPan="magnify"><defs><filter height="300%" id="f6nbhcahchuo0" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><rect fill="#FFFFFF" filter="url(#f6nbhcahchuo0)" height="183.1094" style="stroke:#A80036;stroke-width:1.0;" width="10" x="40.5" y="99.6094"/><rect fill="#FFFFFF" filter="url(#f6nbhcahchuo0)" height="30.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="926.5" y="121.9609"/><rect fill="#FFFFFF" filter="url(#f6nbhcahchuo0)" height="30.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="926.5" y="182.6641"/><rect fill="#FFFFFF" filter="url(#f6nbhcahchuo0)" height="30.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="926.5" y="243.3672"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="45" x2="45" y1="89.6094" y2="291.7188"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="931.5" x2="931.5" y1="89.6094" y2="291.7188"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="75" x="5" y="86.5332">Coordinator</text><ellipse cx="45.5" cy="15" fill="#FEFECE" filter="url(#f6nbhcahchuo0)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M45.5,23 L45.5,50 M32.5,31 L58.5,31 M45.5,50 L32.5,65 M45.5,50 L58.5,65 " fill="none" filter="url(#f6nbhcahchuo0)" style="stroke:#A80036;stroke-width:2.0;"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="75" x="5" y="305.252">Coordinator</text><ellipse cx="45.5" cy="318.3281" fill="#FEFECE" filter="url(#f6nbhcahchuo0)" rx="8" ry="8" style="stroke:#A80036;stroke-width:2.0;"/><path d="M45.5,326.3281 L45.5,353.3281 M32.5,334.3281 L58.5,334.3281 M45.5,353.3281 L32.5,368.3281 M45.5,353.3281 L58.5,368.3281 " fill="none" filter="url(#f6nbhcahchuo0)" style="stroke:#A80036;stroke-width:2.0;"/><rect fill="#FEFECE" filter="url(#f6nbhcahchuo0)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="64" x="897.5" y="53"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="50" x="904.5" y="74.5332">:System</text><rect fill="#FEFECE" filter="url(#f6nbhcahchuo0)" height="31.6094" style="stroke:#A80036;stroke-width:1.5;" width="64" x="897.5" y="290.7188"/><text fill="#000000" font-family="sans-serif" font-size="14" lengthAdjust="spacing" textLength="50" x="904.5" y="312.252">:System</text><rect fill="#FFFFFF" filter="url(#f6nbhcahchuo0)" height="183.1094" style="stroke:#A80036;stroke-width:1.0;" width="10" x="40.5" y="99.6094"/><rect fill="#FFFFFF" filter="url(#f6nbhcahchuo0)" height="30.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="926.5" y="121.9609"/><rect fill="#FFFFFF" filter="url(#f6nbhcahchuo0)" height="30.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="926.5" y="182.6641"/><rect fill="#FFFFFF" filter="url(#f6nbhcahchuo0)" height="30.3516" style="stroke:#A80036;stroke-width:1.0;" width="10" x="926.5" y="243.3672"/><polygon fill="#A80036" points="914.5,117.9609,924.5,121.9609,914.5,125.9609,918.5,121.9609" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="50.5" x2="920.5" y1="121.9609" y2="121.9609"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="57.5" y="117.1045">1</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="229" x="68.5" y="117.1045">requests to analyze center performance</text><polygon fill="#A80036" points="61.5,148.3125,51.5,152.3125,61.5,156.3125,57.5,152.3125" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="55.5" x2="930.5" y1="152.3125" y2="152.3125"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="67.5" y="147.4561">2</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="185" x="78.5" y="147.4561">requests data (day, timeInterval)</text><polygon fill="#A80036" points="914.5,178.6641,924.5,182.6641,914.5,186.6641,918.5,182.6641" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="50.5" x2="920.5" y1="182.6641" y2="182.6641"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="57.5" y="177.8076">3</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="64" x="68.5" y="177.8076">inputs data</text><polygon fill="#A80036" points="61.5,209.0156,51.5,213.0156,61.5,217.0156,57.5,213.0156" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="55.5" x2="930.5" y1="213.0156" y2="213.0156"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="67.5" y="208.1592">4</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="239" x="78.5" y="208.1592">requests confirmation of the inputted data</text><polygon fill="#A80036" points="914.5,239.3672,924.5,243.3672,914.5,247.3672,918.5,243.3672" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;" x1="50.5" x2="920.5" y1="243.3672" y2="243.3672"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="57.5" y="238.5107">5</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="128" x="68.5" y="238.5107">confirms inputted data</text><polygon fill="#A80036" points="61.5,269.7188,51.5,273.7188,61.5,277.7188,57.5,273.7188" style="stroke:#A80036;stroke-width:1.0;"/><line style="stroke:#A80036;stroke-width:1.0;stroke-dasharray:2.0,2.0;" x1="55.5" x2="930.5" y1="273.7188" y2="273.7188"/><text fill="#000000" font-family="sans-serif" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="7" x="67.5" y="268.8623">6</text><text fill="#000000" font-family="sans-serif" font-size="13" lengthAdjust="spacing" textLength="841" x="78.5" y="268.8623">shows the input list, maximum sum contiguous sublist and its sum, and the time interval corresponding to this sublist (least effective time interval)</text><!--MD5=[632d5c2c1dbbc85e91884137b9c64bcb]
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Coordinator" as coordinator
+
+activate coordinator
+
+coordinator -> ":System" : requests to analyze center performance
+activate ":System"
+":System" - -> coordinator : requests data (day, timeInterval)
+deactivate ":System"
+
+coordinator -> ":System" : inputs data
+activate ":System"
+":System" - -> coordinator : requests confirmation of the inputted data
+deactivate ":System"
+coordinator -> ":System" : confirms inputted data
+activate ":System"
+":System" - -> coordinator : shows the input list, maximum sum contiguous sublist and its sum, and the time interval corresponding to this sublist (least effective time interval)
+deactivate ":System"
+
+@enduml
+
+@startuml
+
+autonumber
+
+actor "Coordinator" as coordinator
+
+activate coordinator
+
+coordinator -> ":System" : requests to analyze center performance
+activate ":System"
+":System" - -> coordinator : requests data (day, timeInterval)
+deactivate ":System"
+
+coordinator -> ":System" : inputs data
+activate ":System"
+":System" - -> coordinator : requests confirmation of the inputted data
+deactivate ":System"
+coordinator -> ":System" : confirms inputted data
+activate ":System"
+":System" - -> coordinator : shows the input list, maximum sum contiguous sublist and its sum, and the time interval corresponding to this sublist (least effective time interval)
+deactivate ":System"
+
+@enduml
+
+PlantUML version 1.2022.1(Tue Feb 01 18:19:58 GMT 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: Cp1252
+Language: en
+Country: GB
+--></g></svg>

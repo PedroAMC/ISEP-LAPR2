@@ -1,0 +1,102 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+
+class RegisterSnsUserUi{
+}
+
+class RegisterSnsUserController {
+- SnsUserStore snsUserStore
+- SnsUser snsUser
++ createSnsUser(SnsUserDto dto)
++ boolean registerSnsUser()
+}
+
+class SnsUserStore {
+- Map<Integer, SnsUser> snsUsers
++ createSnsUser(SnsUserDto dto)
+- validateUser(SnsUser user)
++ registerSnsUser(SnsUser snsUser)
+- addSnsUser (SnsUser snsUser)
++ getSnsUsers()
+
+}
+
+
+class SnsUserMapper {
+
++ toSnsUser(SnsUserDto dto)
+}
+
+class SnsUser {
+
+- String name
+- int snsNumber
+- Email email
+- int smsPermission
+
+- validateInformation(String name,int snsNumber,String email, int smsPermission )
+
+}
+
+class SnsUserDto {
+- String name
+- int snsNumber
+- Email email
+- int smsPermission
++ getName()
++ getSnsNumber()
++ getEmail()
++ getSmsPermission()
+
+}
+
+
+class PasswordGenerator {
+- Random RANDOM
+- String CAPITAL
+- String ALPHABET
+- String NUMBERS
+
++ pwdGenerator (int length,int capitals, int numbers)
+
+}
+
+class Company {
+- String designation
+- AuthFacade authFacade
+- SnsUserStore snsUserStore
+
++ getAuthFacade()
++ getSnsUserStore()
+
+}
+
+class AuthFacade {
++existsUser(email)
++addUserWithRole(name,email,pwd,"CLIENT"
+
+}
+
+
+
+
+RegisterSnsUserUi .-> RegisterSnsUserController
+RegisterSnsUserUi .-> SnsUserDto
+RegisterSnsUserController .-> SnsUserStore
+RegisterSnsUserController.-> Company
+RegisterSnsUserController.-> SnsUserDto
+Company -> SnsUserStore : contains >
+Company -> AuthFacade : contains >
+SnsUserStore .-> SnsUserMapper
+SnsUserStore .--> SnsUserDto
+SnsUserStore .--> PasswordGenerator
+SnsUserStore .--> AuthFacade
+SnsUserStore ----> SnsUser : contains >
+SnsUserMapper .-> SnsUserDto
+
+
+
+
+@enduml

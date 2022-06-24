@@ -1,0 +1,118 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+class RegisterSnsUserArrivalUi{
+
+}
+
+
+class RegisterSnsUserArrivalController {
+- SnsUserStore snsUserStore
+- ScheduleStore scheduleStore
++ boolean verifySnsNumber(String snsNumber)
++ boolean verifyVaccineReservation(String snsNumber)
++String getScheduleDetails(String snsNumber)
++registerUserArrival(String snsNumber)
+
+}
+
+class SnsUserStore {
+- Map<Integer, SnsUser> snsUsers
+- List<String> phoneNumbers;
+- List<String> citizenCardNumbers;
++ createSnsUser(SnsUserDto dto)
+- validateUser(SnsUser user)
++ registerSnsUser(SnsUser snsUser)
+- addSnsUser (SnsUser snsUser)
+- addSnsUserPhone (SnsUser snsUser)
+- addCitizenCardNumber (SnsUser snsUser)
++ boolean verifySnsNumber (String snsNumber)
++ Map<String, SnsUser> getSnsUsers()
++ List<String> getPhoneNumbers()
++ List<String> getCitizenCardNumbers()
++ SnsUser getSnsUser (String snsUserNumber)
+
+
+}
+
+class ScheduleStore {
+- HashMap<String,HashMap<Schedule, VaccineType>> schedules
+
++boolean verifySchedule (String snsNumber, Date date)
++HashMap<String, HashMap<Schedule, VaccineType>> getSchedules()
+
+
+}
+
+class Company {
+- String designation
+- AuthFacade authFacade
+- SnsUserStore snsUserStore
+- EmployeeStore employeeStore
+- VaccineTypeStore vaccineTypeStore
+- VaccinationCenterStore vaccinationCenterStore
+- ScheduleStore scheduleStore
+
++ String getDesignation()
++ AuthFacade getAuthFacade()
++ SnsUserStore getSnsUserStore()
++ EmployeeStore getEmployeeStore()
++ VaccineTypeStore getVaccineTypeStore()
++ VaccinationCenterStore getVaccinationCenterStore()
++ ScheduleStore getScheduleStore()
+
+}
+
+class VaccinationCenter {
+- String name
+- String address
+- String phoneNumber
+- Email email
+- String fax
+- String websiteAddress
+- List<Pair<SnsUser,Hour>> usersArrived
+- Coordinator centerCoordinator
+- HashMap<Integer,HashMap<Integer,HashMap<Integer,CenterDays>>> yearSchedule
+- CenterHours hours
+- Slot slot
+
++validateData (String name, String address, String phoneNumber, String email, String fax, String websiteAddress)
++ fillYearSchedule (int year)
++ String getName()
++ String getAddress()
++ String getPhoneNumber()
++ Email getEmail()
++ String getFax()
++ String getWebsiteAddress()
++ List<Pair<SnsUserDto, HourDto>> getUsersArrived()
++ Coordinator getCenterCoordinator()
++ HashMap<Integer, HashMap<Integer, HashMap<Integer, CenterDays>>> getYearSchedule()
++ CenterHours getHours()
++ Slot getSlot()
+- setCenterCoordinator(Coordinator centerCoordinator)
+
+}
+
+class ScheduleDto {
+
+}
+
+class ScheduleMapper {
+
+}
+
+RegisterSnsUserArrivalUi .--> RegisterSnsUserArrivalController
+RegisterSnsUserArrivalController .--> SnsUserStore
+RegisterSnsUserArrivalController .--> ScheduleStore
+RegisterSnsUserArrivalController .-> Company
+Company -> SnsUserStore : contains >
+Company -> ScheduleStore : contains >
+RegisterSnsUserArrivalController --> VaccinationCenter
+ScheduleStore .--> ScheduleMapper
+ScheduleMapper .-> ScheduleDto
+RegisterSnsUserArrivalController .--> ScheduleDto
+RegisterSnsUserArrivalUi .--> ScheduleDto
+
+
+
+@enduml

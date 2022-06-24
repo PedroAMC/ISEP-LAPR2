@@ -1,0 +1,60 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Nurse" as nurse
+
+participant ":WaitingRoomUI" as ui
+participant ":WaitingRoomController" as controller
+
+participant ":VaccinationCenterStore" as store
+participant ":Company" as company
+participant ":VaccinationCenter" as vac
+participant ":VaccinationCenterMapper" as vacmapper
+participant ":SnsUserMapper" as snsusermapper
+participant ":SnsUserDto" as snsuserdto
+participant ":HourMapper" as hourmapper
+participant ":HourDto" as hourdto
+
+activate nurse
+
+nurse -> ui : requests to consult waiting room
+activate ui
+ui -> controller : displayWaitingroom()
+activate controller
+note right
+configfile contains the name(string) of the Vaccination Center where the nurse works
+end note
+controller -> company : getVaccinationCenterStore()
+activate company
+deactivate company
+controller -> store : findVaccinationCenter(vaccinationCenterName)
+activate store
+deactivate store
+controller->vac:getUsersArrived()
+activate vac
+note over vac
+Getter with list by order of arrival
+end note
+vac->vacmapper:usersArrivaltoDto(List<Pair<SnsUser,Hour>> usersArrived)
+activate vacmapper
+activate snsusermapper
+vacmapper->snsusermapper:toSnsUserDto(snsUser)
+deactivate snsusermapper
+activate hourmapper
+vacmapper->hourmapper:toHourDto(hour)
+deactivate hourmapper
+vacmapper-->vac: List<Pair<SnsUser,Hour>>Dto
+deactivate vacmapper
+vac-->controller: List<Pair<SnsUser,Hour>>Dto
+deactivate vac
+deactivate store
+controller-->ui: List<Pair<SnsUser,Hour>>Dto
+deactivate controller
+ui-->nurse : displays list of users in the waiting room
+deactivate ui
+
+deactivate nurse
+
+@enduml

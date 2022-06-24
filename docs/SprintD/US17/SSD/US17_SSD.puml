@@ -1,0 +1,22 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Coordinator" as coordinator
+
+activate coordinator
+
+coordinator -> ":System" : requests to import a CSV file that was used in the past to manage centers
+activate ":System"
+":System" --> coordinator : requests the file, sorting algorithm, sorting option (arrival time, or center leaving time), and if the info should be presented increasing or decreasing.
+deactivate ":System"
+
+coordinator -> ":System" : selects the requested data, chooses file
+
+activate ":System"
+":System" --> coordinator : loads the SNS users by the requested sorting option
+
+deactivate coordinator
+
+@enduml

@@ -1,0 +1,24 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Coordinator" as coordinator
+
+activate coordinator
+
+coordinator -> ":System" : requests to analyze center performance
+activate ":System"
+":System" --> coordinator : requests data (day, timeInterval)
+deactivate ":System"
+
+coordinator -> ":System" : inputs data
+activate ":System"
+":System" --> coordinator : requests confirmation of the inputted data
+deactivate ":System"
+coordinator -> ":System" : confirms inputted data
+activate ":System"
+":System" --> coordinator : shows the input list, maximum sum contiguous sublist and its sum, and the time interval corresponding to this sublist (least effective time interval)
+deactivate ":System"
+
+@enduml

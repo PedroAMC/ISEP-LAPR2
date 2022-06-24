@@ -1,0 +1,75 @@
+@startuml
+
+autonumber
+
+participant App as app
+participant Company as company
+participant "timer\n:Timer" as timer
+participant "task:\nExportCsvTask" as task
+
+activate app
+
+app -> company : scheduleDailyVaccinatedReport (firstTime,waitTillNext)
+
+
+
+activate company
+
+create task
+company --> task : create ()
+
+
+create timer
+company --> timer : create ()
+
+
+
+company -> timer : schedule(task,firstTime,waitTillNext)
+
+note over app,task
+After reaches the date specified as "firstTime"
+end note
+
+activate timer
+deactivate timer
+
+
+timer -> task : run ()
+
+activate timer
+deactivate timer
+
+ref over task
+US_06_SD_RUN
+end ref
+
+activate task
+
+deactivate timer
+loop
+note over app,task
+After the time specified as "waitTillNext" has elapsed
+end note
+
+deactivate task
+timer -> task : run ()
+
+activate timer
+deactivate timer
+
+ref over task
+US_06_SD_RUN
+end ref
+
+
+
+activate task
+
+deactivate timer
+
+
+end
+
+
+
+@enduml

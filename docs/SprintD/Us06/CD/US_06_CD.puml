@@ -1,0 +1,167 @@
+@startuml
+
+package Core {
+
+package Controller {
+
+class App {
+- Company company
+- AuthFacade authFacade
+- activateSchedule(Properties props)
++ getCompany()
++ doLogin(String email, String pwd)
++ doLogout()
+- getProperties()
+- bootstrap()
++ getInstance()
+}
+
+}
+
+package Domain {
+
+package Model {
+class Company {
+- VaccinationCenterStore vaccinationCenterStore
++ getVaccinationCenterStore()
++ scheduleDailyVaccinatedReport(Date firstTime,long waitTillNext)
+}
+
+
+class VaccinationCenter {
+- String name
+- String address
+- String phoneNumber
+- Email email
+- String fax
+- String websiteAddress
+- List<Pair<SnsUser,Hour>> usersArrived
+- Coordinator centerCoordinator
+- HashMap<Integer,HashMap<Integer,HashMap<Integer,CenterDays>>> yearSchedule
+- CenterHours hours
+- Slot slot
+- HashMap<Date,Integer> dailyVaccinated
+- validateData (String name, String address, String phoneNumber, String email, String fax, String websiteAddress)
+
+
+}
+
+}
+
+
+package Store {
+class VaccinationCenterStore {
+- HashMap<String,VaccinationCenter> centers
++ getListOfCenters()
+}
+
+
+}
+
+}
+package Mapper {
+class VaccinationCenterMapper {
++ toVaccinationCenter(VaccinationCenterDto dto)
++ listToDto (List<VaccinationCenter> centers)
++ centerToDto (VaccinationCenter vaccinationCenter)
+}
+}
+
+
+package Dto {
+class VaccinationCenterDto {
+- String name
+- String address
+- String phoneNumber
+- String email
+- String fax
+- String websiteAddress
+- Coordinator centerCoordinator
+- Hour openHour
+- Hour closeHour
+- int slotDuration
+- int capacity
+- HashMap<Date,Integer> dailyVaccinated
++ getName()
++ getAddress()
++ getPhoneNumber()
++ getEmail()
++ getFax()
++ getWebsiteAddress()
++ getCenterCoordinator()
++ getOpenHour()
++ getCloseHour()
++ getSlotDuration()
++ getCapacity()
++ getDailyVaccinated
+}
+}
+
+
+
+
+package Utils {
+class Timer {
++ schedule(TimerTask task, Date firstTime, long period)
+}
+
+interface Runnable {
++ run ()
+}
+
+abstract TimerTask {
++ run()
+}
+
+class ExportCsvTask {
++ run ()
+}
+
+
+
+
+interface CsvExport {
++ exportData(List<T> list)
+}
+
+class DailyReportGenerator {
+
++ exportData(List<VaccinationCenterDto> centersListDto)
+}
+
+class Date {
+- day
+- month
+- year
++ getDay()
++ getMonth()
++ getYear()
++ getCurrentDate ()
+
+}
+
+class FileWriter {
++ append ()
+}
+
+}
+
+}
+
+App --> Company : contains >
+Company .-> ExportCsvTask
+ExportCsvTask --|> TimerTask
+TimerTask ..|> Runnable
+Company ...> Timer
+Company ----> VaccinationCenterStore : contains >
+VaccinationCenterStore ...> VaccinationCenterMapper
+Company ..> VaccinationCenterDto
+VaccinationCenterMapper ..> VaccinationCenterDto
+VaccinationCenterStore ...> VaccinationCenterDto
+VaccinationCenterStore -> VaccinationCenter : stores >
+Company ...> DailyReportGenerator
+DailyReportGenerator ..|> CsvExport
+Company ...> FileWriter
+Company ...> Date
+
+@enduml

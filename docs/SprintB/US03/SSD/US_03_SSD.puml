@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Receptionist" as receptionist
+
+activate receptionist
+
+receptionist -> ":System" : requests to create a new User
+activate ":System"
+":System" --> receptionist : requests data (name,snsNumber,email,smsPermission)
+deactivate ":System"
+
+receptionist -> ":System" : inputs the data
+
+activate ":System"
+":System" --> receptionist : shows the data and asks for confirmation
+deactivate ":System"
+receptionist -> ":System" : confirms/deny the information
+
+activate ":System"
+":System" --> receptionist : informs success/failure message
+deactivate ":System"
+
+
+
+@enduml

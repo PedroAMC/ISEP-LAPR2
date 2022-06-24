@@ -1,0 +1,28 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Administrator" as administrator
+
+activate administrator
+
+administrator -> ":System" : requests to register a new vaccination center
+activate ":System"
+":System" --> administrator : shows types of vaccination centers(mass vaccination center/healthcarecenter) and asks to select one
+deactivate ":System"
+administrator -> ":System" :selects a type
+activate ":System"
+":System" -->administrator: requests data(name,address,phone number,e-mail address,fax number,website address,opening/closing hours,slot duration and the maximum number of vaccines that can be given per slot)
+deactivate ":System"
+administrator->":System" : inputs the data
+activate ":System"
+":System" -->administrator : shows the data and asks for confirmation
+deactivate ":System"
+administrator-> ":System" : confirms/deny the information
+activate ":System"
+":System" --> administrator : informs success/failure message
+deactivate ":System"
+
+deactivate administrator
+@enduml

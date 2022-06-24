@@ -1,0 +1,35 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Administrator" as administrator
+
+activate administrator
+
+administrator -> ":System" : requests to create a new vaccine
+activate ":System"
+":System" --> administrator : shows vaccine types and asks to select one
+deactivate ":System"
+
+administrator -> ":System" : selects a vaccine type
+
+activate ":System"
+":System" --> administrator : requests data (Vaccine name, age group, total amount of doses, dosage, time between doses)
+deactivate ":System"
+
+administrator -> ":System" : types requested data
+
+activate ":System"
+":System" --> administrator : shows all data and requests confirmation
+deactivate ":System"
+
+administrator -> ":System" : confirms the data
+
+activate ":System"
+":System" --> administrator :informs operation success
+deactivate ":System"
+
+deactivate administrator
+
+@enduml

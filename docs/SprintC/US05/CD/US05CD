@@ -1,0 +1,65 @@
+@startuml
+class WaitingRoomUI{
+
+}
+class WaitingRoomController{
+-VaccinationCenterStore vaccinationCenterStore
+
++displayWaitingRoom(String vaccinationCenterName)
+}
+class VaccinationCenterStore{
+-HashMap<String,VaccinationCenter> centers
+
++findVaccinationCenter(String vaccinationCenterName)
+}
+class VaccinationCenter{
+-List<Pair<SnsUser,Hour>> usersArrived
+
+ +getUsersArrived()
+}
+class VaccinationCenterMapper{
++usersArrivaltoDto(List<Pair<SnsUser, Hour>> userArrivedlist)
+}
+class SnsUserMapper{
++toSnsUserDto(SnsUser snsUser)
+}
+class SnsUserDto{
+-String name
+-String address
+-String sex
+-String phoneNumber
+-String email
+-String birthDate
+-String snsNumber
+-String citizenCardNumber
+-int smsPermission
+}
+class HourMapper{
++toHourDto(Hour hour)
+}
+class HourDto{
+-int hour
+-int minutes
+-int seconds
+}
+class Company{
+-VaccinationCenterStore vaccinationCenterStore
++getVaccinationCenterStore()
+
+}
+Company->VaccinationCenterStore : contains >
+WaitingRoomUI..>WaitingRoomController
+WaitingRoomController..>VaccinationCenterStore
+WaitingRoomController..>Company
+VaccinationCenterStore-->VaccinationCenter:contains >
+WaitingRoomController..>VaccinationCenter
+VaccinationCenter..>VaccinationCenterMapper
+VaccinationCenterMapper..>SnsUserMapper
+VaccinationCenterMapper..>HourMapper
+SnsUserMapper..>SnsUserDto
+HourMapper..>HourDto
+
+
+
+
+@enduml

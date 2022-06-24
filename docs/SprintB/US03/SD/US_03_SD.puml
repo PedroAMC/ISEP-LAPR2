@@ -1,0 +1,129 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Receptionist" as receptionist
+
+participant ":RegisterSnsUserUi" as ui
+participant ":RegisterSnsUserController" as controller
+
+participant "SnsUserStore:UserStore" as store
+participant ":Company" as company
+participant ":SnsUserMapper" as mapper
+participant "dto:SnsUserDto" as dto
+participant "user:SnsUser" as user
+participant ":AuthFacade" as facade
+participant ":PasswordGenerator" as pass
+
+
+activate receptionist
+
+receptionist -> ui : requests to create a new User
+activate ui
+
+ui --> receptionist : requests data (name,snsNumber,email,smsPermission)
+deactivate ui
+
+receptionist -> ui : inputs the data
+activate ui
+
+ui -> controller : createSnsUser (dto)
+activate controller
+
+note right
+    dto contains all the information inputed by the user
+end note
+
+controller -> company : userStore = getUserStore()
+activate company
+deactivate company
+
+controller -> store : user = createSnsUser(dto)
+activate store
+
+store -> mapper : user = toSnsUser(dto)
+activate mapper
+
+mapper -> dto : name = getName()
+activate dto
+deactivate dto
+
+mapper -> dto : snsNumber = getSnsNumber()
+activate dto
+deactivate dto
+
+mapper -> dto : email = getEmail()
+activate dto
+deactivate dto
+
+mapper -> dto : smsPermission = getSmsPermission()
+activate dto
+deactivate dto
+
+mapper --> user : create(name,snsNumber,email,smsPermission)
+activate user
+user -> user : validateInformation()
+
+store -> store : validateSnsUser(user)
+deactivate user
+deactivate mapper
+
+
+
+
+deactivate controller
+
+ui --> receptionist : shows the data and asks for confirmation
+
+deactivate store
+deactivate ui
+
+receptionist -> ui : confirms/deny the information
+
+activate ui
+
+ui -> controller : registerSnsUser()
+
+activate controller
+
+controller -> store : registerSnsUser(user)
+
+activate store
+store -> user : email = getEmail()
+activate user
+deactivate user
+
+store -> user : name = getName()
+activate user
+deactivate user
+
+store -> company : facade = getAuthFacade()
+activate company
+deactivate company
+
+store -> facade : existsUser(email)
+activate facade
+deactivate facade
+
+store -> pass : password = pwdGenerator()
+activate pass
+deactivate pass
+
+store -> facade : result = addUserWithRole(name,email,password,"USER")
+activate facade
+deactivate facade
+
+store -> store : addSnsUser(user)
+
+store --> controller : result
+deactivate store
+
+controller --> ui : result
+deactivate controller
+
+ui --> receptionist : informs success/failure message
+
+
+
+@enduml

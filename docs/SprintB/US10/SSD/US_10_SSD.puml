@@ -1,0 +1,25 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+actor "Administrator" as administrator
+
+activate administrator
+
+administrator -> ":System" : requests to register a new employee
+activate ":System"
+":System" --> administrator : requests data (role, name, address, phone number, e-mail, citizen card number)
+deactivate ":System"
+
+administrator -> ":System" : inputs the data
+
+activate ":System"
+":System" --> administrator : shows the data and asks for confirmation
+deactivate ":System"
+administrator -> ":System" : confirms/deny the information
+
+activate ":System"
+":System" --> administrator : informs success/failure message
+deactivate ":System"
+
+@enduml

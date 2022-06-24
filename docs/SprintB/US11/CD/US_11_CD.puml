@@ -1,0 +1,63 @@
+@startuml
+
+class AdminListEmployeesUi
+{
+  -String employeeRole
+}
+
+class ListEmployeesController
+{
+-String role
+-EmployeeStore employeeStore
+  +getEmployeeList(String role)
+
+}
+
+class Company {
+- String designation
+- AuthFacade authFacade
+- EmployeeStore employeeStore
+
+
++ getAuthFacade()
++ getEmployeeStore()
+
+}
+
+class EmployeeStore {
+-List<Employee> employees
++getEmployees
+
+}
+
+class EmployeeMapper {
+
++ toEmployeeDto(Employee employee)
++ toEmployeeDtoList(List<Employee> employeeList)
+}
+
+class EmployeeDto {
+-String email
+-String name
+-String role
+
++ getEmail()
++ getName()
++ getRole()
+}
+
+
+AdminListEmployeesUi ..> ListEmployeesController
+ListEmployeesController ..> Company
+ListEmployeesController ..> EmployeeMapper
+EmployeeMapper ..> EmployeeStore
+Company -> EmployeeStore : contains >
+EmployeeMapper -> EmployeeDto
+ListEmployeesController ..> EmployeeDto
+
+
+
+
+
+
+@enduml

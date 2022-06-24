@@ -1,0 +1,144 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor "Administrator" as admin
+
+participant ":ImportFileSnsUsersUI" as ui
+participant ":ImportFileSnsUsersController" as controller
+participant ":FileSnsUserStore" as store
+participant ":RegisterSnsUsersController" as snscontroller
+participant ":SnsUserStore" as snsstore
+participant ":SnsUserMapper" as mapper
+participant "dto:SnsUserDto" as dto
+participant "user:SnsUser" as snsuser
+
+
+activate admin
+
+admin -> ui : requests to import a file with users
+activate ui
+
+ui --> admin : requests data (path file)
+deactivate ui
+
+admin -> ui : inputs the data
+activate ui
+
+autonumber stop
+loop #Salmon while path invalid or file blank
+ui --> admin: **4** informs admin that file path is invalid, or that the file is blank, requests valid file path
+admin -> ui: **5** inputs the data (valid file path, and non blank file)
+end
+autonumber resume
+
+ui -> controller: SeparateUsers(fileUsers)
+activate controller
+
+controller -> store: separateUsers(fileUsers)
+activate store
+
+store -> store: countUsers(fileUsers)
+store --> controller: returns array of users separated from the file
+deactivate store
+
+controller --> ui: returns array of users separated from the file
+deactivate controller
+
+loop while remaining users to be verified
+ui -> snscontroller: create new Dto with split data (name, address, sex, phoneNumber, email, birthdate, snsNumber, citizenCardNumber, smsPermission)
+activate snscontroller
+
+snscontroller -> snsstore: createSnsUser(dto)
+activate snsstore
+
+snsstore -> mapper : user = toSnsUser(dto)
+activate mapper
+
+mapper -> dto : name = getName()
+activate dto
+deactivate dto
+
+mapper -> dto : snsNumber = getSnsNumber()
+activate dto
+deactivate dto
+
+mapper -> dto : email = getEmail()
+activate dto
+deactivate dto
+
+mapper -> dto : smsPermission = getSmsPermission()
+activate dto
+deactivate dto
+
+mapper --> snsuser : create(name,snsNumber,email,smsPermission)
+deactivate mapper
+activate snsuser
+
+snsuser -> snsuser : validateInformation()
+snsuser --> snsstore: gives result of validation
+deactivate snsuser
+
+snsstore --> snscontroller: gives result of validation
+deactivate snsstore
+
+snscontroller --> ui: gives result of validation and if loop can continue
+deactivate snscontroller
+end
+
+autonumber stop
+
+alt #Salmon Parameter is incorrect, or user already exists
+ui --> admin: **21** Informs the user that a parameter is not valid, or a user with the same parameters already exists
+autonumber resume
+end
+
+loop while remaining users to be registered
+ui -> snscontroller: recreates Dto with data (name, address, sex, phoneNumber, email, birthdate, snsNumber, citizenCardNumber, smsPermission)
+activate snscontroller
+
+snscontroller -> snsstore: createSnsUser(dto)
+activate snsstore
+
+snsstore -> mapper : user = toSnsUser(dto)
+activate mapper
+
+mapper -> dto : name = getName()
+activate dto
+deactivate dto
+
+mapper -> dto : snsNumber = getSnsNumber()
+activate dto
+deactivate dto
+
+mapper -> dto : email = getEmail()
+activate dto
+deactivate dto
+
+mapper -> dto : smsPermission = getSmsPermission()
+activate dto
+deactivate dto
+
+mapper --> snsuser : registers new user
+deactivate mapper
+activate snsuser
+
+snsuser --> snsstore: registerSnsUser()
+deactivate snsuser
+
+snsstore --> snscontroller: RegisterSnsUser()
+deactivate snsstore
+
+snscontroller --> ui: registeres sns user
+deactivate snscontroller
+end
+
+ui --> admin: gives message of success
+deactivate ui
+
+deactivate admin
+
+
+
+@enduml

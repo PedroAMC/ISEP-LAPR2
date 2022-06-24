@@ -1,0 +1,40 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+autonumber
+
+actor "Nurse" as user
+
+activate user
+
+user -> ":System" : requests to register an administration
+activate ":System"
+note right user : The nurse should indicate the vaccination center where she/he is working
+":System" --> user : shows the list of user in the vaccination center
+
+deactivate ":System"
+
+user -> ":System" : selects the desired SNS user
+
+activate ":System"
+
+":System" --> user : shows the vaccine administration instructions
+deactivate ":System"
+
+":System" --> user : requests the necessary data
+activate ":System"
+
+user -> ":System" : inputs the necessary data (vaccine type, vaccine name/brand, vaccine lot number, administration time)
+deactivate ":System"
+
+":System" --> user : shows data and asks for confirmation
+activate ":System"
+
+user -> ":System" : confirms the data
+deactivate ":System"
+
+":System" --> user : informs success/failure of the operation
+activate ":System"
+":System" --> user : sends message to the user after the waiting time (if authorized)
+deactivate ":System"
+@enduml

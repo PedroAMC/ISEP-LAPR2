@@ -1,0 +1,17 @@
+@startuml
+
+autonumber
+
+actor "<<automatic>>\nTimer/Clock" as timer
+
+activate timer
+timer -> ":System" : starts the exportation of the data
+activate ":System"
+":System" -> ":System" : exports the data
+activate ":System"
+deactivate ":System"
+
+deactivate timer
+
+
+@enduml

@@ -1,0 +1,46 @@
+@startuml
+
+package Core {
+
+package Controller {
+
+}
+
+
+package Domain {
+
+package Model {
+
+}
+
+package Store {
+}
+
+
+
+}
+
+
+package Mapper {
+}
+
+package Dto {
+}
+
+package Utils {
+}
+
+}
+
+Controller ..> Model
+Model .> Store
+Store .> Model
+Store ..> Mapper
+Store ..> Dto
+Model .> Dto
+Model .> Utils
+Mapper .> Dto
+
+
+
+@enduml

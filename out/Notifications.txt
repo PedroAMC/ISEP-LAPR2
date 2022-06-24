@@ -1,0 +1,6 @@
+SnsUsers Notifications:
+
+Sended to: test
+Message: testworks
+Sended to: test
+Message: testworks
