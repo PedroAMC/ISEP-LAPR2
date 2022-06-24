@@ -9,7 +9,7 @@ The teams consists of students identified in the following table.
 | **1211511**  | Pedro Campos               |
 | **1211488**  | Miguel Ferreira            |
 | **1211689**  | Nuno Cunha                 |
-| **1211601**  | Lucas Gonçalves            |
+| **1211601**  | Lucas GonÃ§alves            |
 | **1200904**  | Diogo Teixeira             |
 
 
@@ -19,7 +19,6 @@ The teams consists of students identified in the following table.
 
 Throughout the project's development period, the distribution of _tasks / requirements / features_ by the team members was carried out as described in the following table. 
 
-**Keep this table must always up-to-date.**
 
 | Task                      | [Sprint A](SprintA/README.md) | [Sprint B](SprintB/README.md) | [Sprint C](SprintC/README.md) |  [Sprint D](SprintD/README.md) |
 |-----------------------------|------------|------------|------------|------------|
