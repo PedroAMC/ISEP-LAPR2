@@ -8,6 +8,9 @@ centers and the vaccination process, to the viewing of statistics.
 
 It also contains multiple brute-force and sorting algorithms, used to analyse the performance of a center, with their complexity analised using discrete mathematics theorems.
 
+This application was developed using agile and GRAPS methodologies and all the developed functionalities can be viewed in the [docs](docs) folder, in the directory of their respective sprint.
+
+
 In particular, it has:
 
 * [The team members and task assignment during Sprints](docs/README.md)
