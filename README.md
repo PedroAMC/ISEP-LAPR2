@@ -1,7 +1,12 @@
 # README #
 
-This repository contains didactic artifacts relevant to the integrative project to be developed during the second semester of the academic year of 2021-2022 in the [Degree in Informatics Engineering (LEI)](http://www.isep.ipp.pt/Course/Course/26) from [Instituto Superior de Engenharia do Porto (ISEP)](http://www.isep.ipp.pt).
+This repository contains the integrative project developed in the ambit of LAPR2 course, ISEP 2021.
 
+This application is intended to manage and overview the vaccination process performed by 
+multiple vaccinations centers as well as many health care professionals, from the creation of 
+centers and the vaccination process, to the viewing of statistics. 
+
+It also contains multiple brute-force and sorting algorithms, used to analyse the performance of a center, with their complexity analised using discrete mathematics theorems.
 
 In particular, it has:
 
